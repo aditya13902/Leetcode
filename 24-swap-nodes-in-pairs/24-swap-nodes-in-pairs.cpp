@@ -16,11 +16,11 @@ public:
         }
         ListNode* dummy=new ListNode(-1,head);
         ListNode* ptr=dummy;
-        ListNode* first;
-        ListNode* second;
+        // ListNode* first;
+        // ListNode* second;
         while(ptr->next && ptr->next->next){
-            first=ptr->next;
-            second=ptr->next->next;
+            ListNode* first=ptr->next;
+            ListNode* second=ptr->next->next;
             first->next=second->next;
             second->next=first;
             ptr->next=second;
