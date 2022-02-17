@@ -2,7 +2,7 @@ class Bank {
 public:
     vector<long long>bal;
     Bank(vector<long long>& balance) {
-        bal.push_back(0);
+        bal.push_back(0);// to make the bal array 1-indexed
         for(auto ele:balance){
             bal.push_back(ele);
         }
