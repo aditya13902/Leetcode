@@ -2,7 +2,7 @@ class Solution {
 public:
     // set<int>st;
     vector<vector<int>>ans;
-    void helper(int k,int n,vector<int>subans,int sum,int siz,int idx){
+    void helper(int k,int n,vector<int>&subans,int sum,int siz,int idx){
         if(siz>k || sum>n){
             return;
         }
