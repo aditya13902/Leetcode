@@ -1,10 +1,11 @@
 class Solution {
 public:
     int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
+        int n=img1.size();
         vector<pair<int,int>>vec_a;
         vector<pair<int,int>>vec_b;
-        for(int i=0;i<img1.size();i++){
-            for(int j=0;j<img1[0].size();j++){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
                 if(img1[i][j]==1){
                     vec_a.push_back({i,j});
                 }
