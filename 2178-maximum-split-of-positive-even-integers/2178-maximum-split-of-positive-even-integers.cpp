@@ -1,26 +1,23 @@
 class Solution {
 public:
-	bool solve(long long currSum,long long finalSum,vector<long long>&temp,long long i)
-	{
-		if(currSum == 0)
-		{
-			return true;
-		}
-		if(currSum < 0 || currSum < i) return false;
+    vector<long long> maximumEvenSplit(long long n) {
+        if(n%2) // odd
+            return {};
 
-		for(int j=i;j<finalSum;j+=2)
-		{
-			temp.push_back(j);
-			if(solve(currSum-j,finalSum,temp,j+2)) return true;
-			temp.pop_back();
-		}
-		return false;
-	}
-	vector<long long> maximumEvenSplit(long long finalSum) {
-		if(finalSum % 2 != 0) return {};
-		if(finalSum == 2 || finalSum == 4) return {finalSum};
-		vector<long long>temp;
-		if( solve(finalSum,finalSum,temp,2)) return temp;
-		return {};
-	}
+		vector<long long> ans;
+        long long i = 2;
+        long long crSum=0;
+		
+        while((crSum+i)<= n)
+        {
+            ans.push_back(i);
+            crSum+=i;
+            i+=2;
+        }
+		
+		// add remaining difference to the last value in answer list
+		int sz = ans.size();
+        ans[sz-1] += (n-crSum);
+        return ans;
+    }
 };
