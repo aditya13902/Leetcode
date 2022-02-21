@@ -1,7 +1,7 @@
 class Solution {
 public:
     int ans=0;
-    void dfs(int n,int pos,vector<bool>flag){
+    void dfs(int n,int pos,vector<bool>&flag){
         if(pos>n){
             ans++;
             return;
