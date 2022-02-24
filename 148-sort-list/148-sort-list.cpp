@@ -14,7 +14,7 @@ public:
         return node1->val<node2->val;
     }
     ListNode* sortList(ListNode* head) {
-        if(head==NULL){
+        if(!head){
             return NULL;
         }
         vector<ListNode*>vec;
