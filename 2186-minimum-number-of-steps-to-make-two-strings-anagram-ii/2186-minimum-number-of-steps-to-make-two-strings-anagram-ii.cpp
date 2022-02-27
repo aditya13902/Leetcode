@@ -10,7 +10,13 @@ public:
         }
         int cnt=0;
         for(auto it:mp){
-            cnt+=abs(it.second);
+            if(it.second<0){
+                cnt-=it.second;
+            }
+            else{
+                cnt+=it.second;
+            }
+            
         }
         return cnt;
     }
