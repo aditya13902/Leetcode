@@ -1,22 +1,18 @@
 class Solution {
 public:
     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
-        vector<pair<int,int>>vec;
+        multiset<long long>st;
         for(int i=0;i<nums.size();i++){
-            vec.push_back({nums[i],i});
-        }
-        sort(vec.begin(),vec.end());
-        for(int i=0;i<vec.size();i++){
-            for(int j=i+1;j<vec.size();j++){
-                if((long long)vec[j].first<=(long long)t+vec[i].first){
-                    if(abs(vec[i].second-vec[j].second)<=k){
-                        return true;
-                    }
-                }
-                else{
-                    break;
-                }
+            if(i>k){
+                st.erase(st.find(nums[i-k-1]));
             }
+            
+            auto pos1=st.lower_bound((long long)nums[i]-t);
+            auto pos2=st.upper_bound((long long)nums[i]+t);
+            if(pos1!=pos2){
+                return true;
+            }
+            st.insert((long long)nums[i]);
         }
         return false;
     }
