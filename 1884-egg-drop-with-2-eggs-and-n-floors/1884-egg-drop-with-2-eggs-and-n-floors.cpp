@@ -2,12 +2,13 @@ class Solution {
 public:
     vector<vector<int>>dp;
     int helper(int n,int k){
-        if(n<=1){
-            return n;
-        }
         if(k==1){
             return n;
         }
+        if(n==1){
+            return 1;
+        }
+
         if(dp[n][k]!=-1){
             return dp[n][k];
         }
