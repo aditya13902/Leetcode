@@ -8,14 +8,13 @@ public:
         if(dp[i]!=-1){
             return dp[i];
         }
-        int curr = nums[i];
         int idx=i;
         int sum=0;
-        while(idx<nums.size() && nums[idx]==curr){
+        while(idx<nums.size() && nums[idx]==nums[i]){
             sum+=nums[idx];
             idx++;
         }
-        while(idx<nums.size() && nums[idx]==curr+1){
+        while(idx<nums.size() && nums[idx]==nums[i]+1){
             idx++;
         }
         return dp[i]=max(sum+helper(nums,idx),helper(nums,i+1));
