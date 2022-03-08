@@ -10,10 +10,9 @@ public:
     vector<int> subsetSums(vector<int> arr, int N,int sum=0,int idx=0)
     {
         // Write Your Code here
-        vector<int> sub;
         if(idx>=N){
             ans.push_back(sum);
-            return sub;
+            return {};
         }
         subsetSums(arr,N,sum+arr[idx],idx+1);
         subsetSums(arr,N,sum,idx+1);
