@@ -1,17 +1,32 @@
 class FreqStack {
-    priority_queue<pair<int, pair<int, int>>> q;
-    unordered_map<int, int> freq;
-    int pos = 0;
 public:
-    void push(int x) {
-        q.push({++freq[x],{++pos, x}});
+    unordered_map<int,int>freq;
+    unordered_map<int,stack<int>>mp;
+    int mx=0;
+    FreqStack() {
+        
+    }
+    
+    void push(int val) {
+        freq[val]++;
+        mx=max(mx,freq[val]);
+        mp[freq[val]].push(val);
     }
     
     int pop() {
-        auto val = q.top();
-        q.pop();
-        int x = val.second.second;
-        freq[x]--;
-        return x;
+        int val=mp[mx].top();
+        mp[mx].pop();
+        if(mp[mx].size()==0){
+            mx--;
+        }
+        freq[val]--;
+        return val;
     }
 };
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * FreqStack* obj = new FreqStack();
+ * obj->push(val);
+ * int param_2 = obj->pop();
+ */
