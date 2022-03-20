@@ -33,6 +33,6 @@ public:
         int c=1+helper(tops,bottoms,false,tops[0],1);
         int d=helper(tops,bottoms,false,bottoms[0],1);
         // cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
-        return min(min(a,b),min(c,d))>=1000000 ?-1 :min(min(a,b),min(c,d));
+        return min(min(a,b),min(c,d))>tops.size() ?-1 :min(min(a,b),min(c,d));
     }
 };
