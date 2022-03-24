@@ -1,38 +1,24 @@
 class Solution {
 public:
-    bool bi(vector<int>&color,vector<vector<int>>&graph,int node)
-    {
-        if(color[node]==-1)
-            color[node]=0;
-        for(auto it:graph[node])
-        {
-            if(color[it]==-1)
-            {
-                color[it]=1-color[node];
-                if(!bi(color,graph,it))
-                    return false;
-            }
-            else
-            {
-                if(color[it]==color[node])
-                    return false;
-                
+    bool dfs(vector<vector<int>>& graph,vector<int>&color,int c,int node){
+        if(color[node]!=-1){
+            return color[node]==c;
+        }
+        color[node]=c;
+        for(auto ele:graph[node]){
+            if(!dfs(graph,color,c xor 1,ele)){
+                return false;
             }
         }
         return true;
     }
     bool isBipartite(vector<vector<int>>& graph) {
-        int n=graph.size();
-        vector<int>color(n,-1);
-        for(int i=0;i<n;i++)
-        {
-            if(color[i]==-1)
-            {
-                if(!bi(color,graph,i))
-                    return false;
+        vector<int>color(graph.size(),-1);
+        for(int i=0;i<graph.size();i++){
+            if(color[i]==-1 && !dfs(graph,color,1,i)){
+                return false;
             }
         }
         return true;
-        
     }
 };
