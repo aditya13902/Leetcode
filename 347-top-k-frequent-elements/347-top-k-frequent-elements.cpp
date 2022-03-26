@@ -11,9 +11,10 @@ public:
         }
         vector<int>ans;
         while(k--){
-            auto x=pq.top();
+            pair<int,int> x=pq.top();
             pq.pop();
-            ans.push_back(x.second);
+            int ele=x.second;
+            ans.push_back(ele);
         }
         return ans;
         
