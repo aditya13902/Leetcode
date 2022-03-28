@@ -22,10 +22,32 @@ class Solution {
         }
         
         if(mat[row][col]!='/'){
-            dfs(row,col,type ^ 1);
+            if(type==0){
+                dfs(row,col,1);
+            }
+            else if(type==1){
+                dfs(row,col,0);
+            }
+            else if(type==3){
+                dfs(row,col,2);
+            }
+            else{
+                dfs(row,col,3);
+            }
         }
         if(mat[row][col]!='\\'){
-            dfs(row,col,type ^ 3);
+            if(type==0){
+                dfs(row,col,3);
+            }
+            else if(type==3){
+                dfs(row,col,0);
+            }
+            else if(type==1){
+                dfs(row,col,2);
+            }
+            else{
+                dfs(row,col,1);
+            }
         }
            
     }
