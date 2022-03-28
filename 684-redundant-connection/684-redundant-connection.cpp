@@ -1,31 +1,35 @@
 class Solution {
 public:
     vector<int>parent;
-    int getParent(int v){
-        if(v==parent[v]){
+    int getP(int v){
+        if(parent[v]==v){
             return v;
         }
-        return getParent(parent[v]);
+        return getP(parent[v]);
+    }
+    bool merge(int v1,int v2){
+        v1=getP(v1);
+        v2=getP(v2);
+        if(v1!=v2){
+            parent[v1]=v2;
+            return true;
+        }
+        return false;
     }
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        int n=edges.size();
-        parent.resize(n+1);
-        for(int i=0;i<=n;i++){
+        parent.resize(edges.size()+1);
+        for(int i=1;i<=edges.size();i++){
             parent[i]=i;
         }
         vector<int>ans;
         for(auto vec:edges){
-            int a=getParent(vec[0]);
-            int b=getParent(vec[1]);
-            if(a!=b){
-                parent[b]=a;
-            }
-            else{
+            int u=vec[0];
+            int v=vec[1];
+            if(!merge(u,v)){
                 ans=vec;
                 break;
             }
         }
-        
         return ans;
     }
 };
