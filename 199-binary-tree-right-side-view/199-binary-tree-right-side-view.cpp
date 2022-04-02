@@ -16,7 +16,6 @@ public:
         if(root==NULL){
             return ans;
         }
-        
         queue<TreeNode*>q;
         q.push(root);
         while(q.size()){
@@ -25,15 +24,15 @@ public:
             while(l--){
                 TreeNode* top=q.front();
                 q.pop();
-                if(top->right!=NULL){
-                    q.push(top->right);
-                }
                 if(top->left!=NULL){
                     q.push(top->left);
                 }
+                if(top->right!=NULL){
+                    q.push(top->right);
+                }
                 subans.push_back(top->val);
             }
-            ans.push_back(subans[0]);
+            ans.push_back(subans[subans.size()-1]);
         }
         return ans;
     }
