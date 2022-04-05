@@ -17,7 +17,7 @@ public:
         }
         int ans=0;
         for(int i=0;i<siz;i++){
-            ans+=min(left[i],right[i])-height[i];
+            ans+=(min(left[i],right[i])-height[i]);
         }
         return ans;
     }
