@@ -6,13 +6,13 @@ using namespace std;
 //User function template for C++
 class Solution{
 public:
-	int rowWithMax1s(vector<vector<int> > mat, int n, int m) {
+	int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
 	    // code here
 	    int row=0;
 	    int col=m-1;
 	    int ans=-1;
 	    while(row<n && col>=0){
-	        if(mat[row][col]==1){
+	        if(arr[row][col]==1){
 	            ans=row;
 	            col--;
 	        }
@@ -21,7 +21,6 @@ public:
 	        }
 	    }
 	    return ans;
-	    
 	}
 
 };
