@@ -8,10 +8,10 @@ public:
         vector<int> subans=grayCode(n-1);
         vector<int> ans;
         for(int i=0;i<subans.size();i++){
-            ans.push_back(subans[i]);
+            ans.pb(subans[i]);
         }
         for(int i=subans.size()-1;i>=0;i--){
-            ans.push_back(subans[i]+(1<<(n-1)));
+            ans.pb(subans[i]+(1<<(n-1)));
         }
         return ans;
     }
