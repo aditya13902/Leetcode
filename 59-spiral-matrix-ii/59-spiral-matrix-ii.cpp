@@ -10,21 +10,19 @@ public:
             for(int i = cs; i <= ce; ++i)
                 v[rs][i] = ++val;				
 
-            
-            for(int i = rs+1; i <= re; ++i)
+            rs++;
+            for(int i = rs; i <= re; ++i)
                 v[i][ce] = ++val;
-
-            if(rs < re && cs < ce)
+            ce--;
+            if(rs <= re && cs <= ce)
             {
-                for(int i = ce-1; i>cs; --i)
+                for(int i = ce; i>=cs; --i)
                     v[re][i] = ++val;
-				for(int i = re; i>rs; --i) 
+                re--;
+				for(int i = re; i>=rs; --i) 
                     v[i][cs] = ++val;
+                cs++;
             }
-            ++rs;
-            --re;
-            ++cs;
-            --ce;
         }
         return v;
     }
