@@ -1,29 +1,22 @@
 class Solution {
 public:
-    int minDistance(string word1, string word2) {
-        int m = word1.length();
-        int n = word2.length();
-        
-        vector<vector<int>> dp(n + 1, vector<int> (m + 1, 0));
-        for(int i = 1; i <= n; i++){
-            dp[i][0] = i;
+    vector<vector<int>>dp;
+    int helper(string A,string B,int i,int j){
+        if(i>=A.size() || j>=B.size()){
+            return max(A.size()-i,B.size()-j);
         }
-        for(int i = 1; i <= m; i++){
-            dp[0][i] = i;
+        if(dp[i][j]!=-1){
+            return dp[i][j];
         }
-        
-        for(int i = 1; i <= n; i++){
-            for(int j = 1; j <= m; j++){
-              
-                if(word2[i - 1] == word1[j - 1]){
-                    dp[i][j] = dp[i - 1][j - 1];
-                }
-                else{
-                    dp[i][j] = min({dp[i - 1][j - 1], dp[i][j - 1], dp[i - 1][j]}) + 1;
-                }
-               
-            } 
+        if(A[i]==B[j]){
+            return dp[i][j]=helper(A,B,i+1,j+1);
         }
-        return dp[n][m];
+        else{
+            return dp[i][j]=1+min(helper(A,B,i+1,j+1),min(helper(A,B,i+1,j),helper(A,B,i,j+1)));
+        }
+    }
+    int minDistance(string A, string B) {
+        dp.resize(A.size(),vector<int>(B.size(),-1));
+        return helper(A,B,0,0);
     }
 };
