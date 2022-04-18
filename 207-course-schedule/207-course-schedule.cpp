@@ -1,30 +1,38 @@
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>>adj(numCourses);
-        vector<int>ind(numCourses,0);
-        for(auto vec:prerequisites){
-            adj[vec[1]].push_back(vec[0]);
-            ind[vec[0]]++;
+    bool canFinish(int n, vector<vector<int>>& pre) {
+        vector<int>indeg(n,0);
+        for(auto ele:pre){
+            indeg[ele[1]]++;
+        }
+        vector<vector<int>>adj(n);
+        for(auto ele:pre){
+            adj[ele[0]].push_back(ele[1]);
         }
         queue<int>q;
-        for(int i=0;i<numCourses;i++){
-            if(ind[i]==0){
+        for(int i=0;i<n;i++){
+            if(indeg[i]==0){
                 q.push(i);
             }
         }
-        int cnt=0;
         while(q.size()){
-            int x=q.front();
+            int top=q.front();
             q.pop();
-            cnt++;
-            for(auto ele:adj[x]){
-                ind[ele]--;
-                if(ind[ele]==0){
+            for(auto ele:adj[top]){
+                if(indeg[ele]==0){
+                    continue;
+                }
+                indeg[ele]--;
+                if(indeg[ele]==0){
                     q.push(ele);
                 }
             }
         }
-        return cnt==numCourses;
+        for(auto ele:indeg){
+            if(ele!=0){
+                return false;
+            }
+        }
+        return true;
     }
 };
