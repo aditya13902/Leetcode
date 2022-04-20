@@ -20,17 +20,15 @@ class Solution{
     	int cnt=1;
     	int ans=1;
     	while(i<n && j<n){
-    	    if(arr[i]<=dep[j]){
-    	        cnt++;
+    	    if(dep[j]>=arr[i]){
     	        i++;
+    	        cnt++;
     	    }
     	    else{
     	        j++;
     	        cnt--;
     	    }
-    	    if(cnt>ans){
-    	        ans=cnt;
-    	    }
+    	    ans=max(cnt,ans);
     	}
     	return ans;
     }
