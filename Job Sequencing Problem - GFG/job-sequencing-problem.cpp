@@ -34,25 +34,26 @@ class Solution
     { 
         // your code here
         sort(arr,arr+n,cmp);
-        int mxd=0;
+        int mx=0;
         for(int i=0;i<n;i++){
-            // if()
-            mxd=max(mxd,arr[i].dead);
+            mx=max(mx,arr[i].dead);
         }
-        vector<int>vec(mxd+1,0);
+        vector<int>mark(mx+1,0);
         int cnt=0;
-        int ans=0;
+        int sum=0;
         for(int i=0;i<n;i++){
-            for(int j=arr[i].dead;j>=1;j--){
-                if(vec[j]==0){
-                    ans+=arr[i].profit;
+            int d=arr[i].dead;
+            for(int j=d;j>=1;j--){
+                if(mark[j]==0){
                     cnt++;
-                    vec[j]=1;
+                    sum+=arr[i].profit;
+                    mark[j]=1;
                     break;
                 }
             }
+            
         }
-        return {cnt,ans};
+        return {cnt,sum};
     } 
 };
 
