@@ -1,29 +1,26 @@
 class Solution {
-private:
-    int row;
-    int col;
-    
 public:
-    int countSquares(vector<vector<int>>& mat) {
-        // mat=matrix;
-        row=mat.size();
-        col=mat[0].size();
-        int cnt=0;
-        // dp.resize(row+1,vector<int>(col+1,-1));
-        for(int i=0;i<row;i++){
-            for(int j=0;j<col;j++){
-                if(mat[i][j]==1){
+    int countSquares(vector<vector<int>>& matrix) {
+        int r=matrix.size();
+        int c=matrix[0].size();
+        int ans=0;
+        vector<vector<int>>dp(r,vector<int>(c));
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(matrix[i][j]==1){
+                    int cnt=0;
                     if(i==0 || j==0){
-                        cnt+=1;
+                        cnt=1;
                     }
                     else{
-                        int sub=1+min(mat[i-1][j],min(mat[i][j-1],mat[i-1][j-1]));
-                        cnt+=sub;
-                        mat[i][j]=sub; 
+                        cnt=1+min({dp[i-1][j],dp[i-1][j-1],dp[i][j-1]});   
                     }
+                    ans+=cnt;
+                    dp[i][j]=cnt;
                 }
             }
         }
-        return cnt;
+        return ans;
+        
     }
 };
