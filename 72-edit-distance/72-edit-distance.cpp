@@ -1,22 +1,23 @@
 class Solution {
 public:
-    vector<vector<int>>dp;
-    int helper(string A,string B,int i,int j){
-        if(i>=A.size() || j>=B.size()){
-            return max(A.size()-i,B.size()-j);
+    int minDistance(string text1, string text2) {
+        vector<vector<int>>dp(text1.size()+1,vector<int>(text2.size()+1,0));
+        for(int i=0;i<=text1.size();i++){
+            dp[i][0]=i;
         }
-        if(dp[i][j]!=-1){
-            return dp[i][j];
+        for(int j=0;j<=text2.size();j++){
+            dp[0][j]=j;
         }
-        if(A[i]==B[j]){
-            return dp[i][j]=helper(A,B,i+1,j+1);
+        for(int i=1;i<=text1.size();i++){
+            for(int j=1;j<=text2.size();j++){
+                if(text1[i-1]==text2[j-1]){
+                    dp[i][j]=dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=1+min(dp[i-1][j],min(dp[i][j-1],dp[i-1][j-1]));
+                }
+            }
         }
-        else{
-            return dp[i][j]=1+min(helper(A,B,i+1,j+1),min(helper(A,B,i+1,j),helper(A,B,i,j+1)));
-        }
-    }
-    int minDistance(string A, string B) {
-        dp.resize(A.size(),vector<int>(B.size(),-1));
-        return helper(A,B,0,0);
+        return dp[text1.size()][text2.size()];
     }
 };
