@@ -18,19 +18,23 @@ class Solution {
 public:
     Node* copyRandomList(Node* head) {
         unordered_map<Node*,Node*>mp;
-        Node*ptr=head;
-        while(ptr){
-            mp[ptr]=new Node(ptr->val);
+        Node* ptr=head;
+        Node* dummy=new Node(-1);
+        Node* node=dummy;
+        while(ptr!=NULL){
+            node->next=new Node(ptr->val);
+            mp[ptr]=node->next;
+            node=node->next;
             ptr=ptr->next;
         }
         ptr=head;
-        Node* dummy=mp[head];
-        while(ptr){
-            dummy->next=mp[ptr->next];
-            dummy->random=mp[ptr->random];
+        // node=dummy;
+        while(ptr!=NULL){
+            if(ptr->random){
+                mp[ptr]->random=mp[ptr->random];
+            }
             ptr=ptr->next;
-            dummy=dummy->next;
         }
-        return mp[head];
+        return dummy->next;
     }
 };
