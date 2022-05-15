@@ -1,31 +1,34 @@
 class Solution {
 public:
-    bool check(string& str,int s,int e){
-        while(s<e){
-            if(str[s]!=str[e]){
+    bool ispal(string &s,int j,int i){
+        while(j<i){
+            if(s[j]==s[i]){
+                j++;
+                i--;
+                
+            }
+            else{
                 return false;
             }
-            s++;
-            e--;
         }
         return true;
     }
     int minCut(string s) {
-        int n=s.size();
-        vector<int>dp(n);
+        vector<int>dp(s.size());
         dp[0]=0;
-        for(int i=1;i<n;i++){
+        for(int i=1;i<s.size();i++){
             dp[i]=i;
-            for(int j=0;j<=i;j++){
-                if(check(s,j,i)){
+            for(int j=i;j>=0;j--){
+                if(ispal(s,j,i)){
                     if(j==0){
                         dp[i]=0;
-                        break;
                     }
-                    dp[i]=min(dp[i],1+dp[j-1]);
+                    else{
+                        dp[i]=min(dp[i],1+dp[j-1]);
+                    }
                 }
             }
         }
-        return dp[n-1];
+        return dp[s.size()-1];
     }
 };
