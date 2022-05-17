@@ -1,33 +1,58 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+// /**
+//  * Definition for a binary tree node.
+//  * struct TreeNode {
+//  *     int val;
+//  *     TreeNode *left;
+//  *     TreeNode *right;
+//  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+//  * };
+//  */
+// class Solution {
+// public:
+//     void helper(TreeNode* root,vector<vector<int>> &out,map<int,vector<int>>&mymap,int dist){
+//         if(root==NULL){
+//             return;
+//         }
+//         mymap[dist].push_back(root->val);
+//         helper(root->left,out,mymap,dist-1);
+//         helper(root->right,out,mymap,dist+1);
+        
+//     }
+//     vector<vector<int>> verticalTraversal(TreeNode* root) {
+//         vector<vector<int>> out;
+//         map<int,vector<int>> mymap;
+//         helper(root,out,mymap,0);
+//         for(auto it:mymap){
+//             vector<int>&vec=it.second;
+//             sort(vec.begin(),vec.end());
+//             out.push_back(vec);
+//         }
+//         return out;
+        
+        
+        
+//     }
+// };
 class Solution {
 public:
-    map<int,vector<pair<int,int>>>mp;
-    void preorder(TreeNode* root,int d,int h){
-        if(!root){
+    void fun(TreeNode*root,map<int,vector<pair<int,int>>>&m,int w,int h)
+    {
+        if(root==NULL)
             return;
-        }
-        mp[d].push_back({h,root->val});
-        preorder(root->left,d-1,h+1);
-        preorder(root->right,d+1,h+1);
+        m[w-1].push_back({h+1,root->val});
+        fun(root->left,m,w-1,h+1);
+        fun(root->right,m,w+1,h+1);
     }
-    vector<vector<int>> verticalTraversal(TreeNode* root) {
-        preorder(root,0,0);
-        for(auto ele:mp){
-            auto& vec=ele.second;
-            sort(vec.begin(),vec.end());
-        }
+    vector<vector<int>> verticalTraversal(TreeNode* root)
+    {
         vector<vector<int>>ans;
-        for(auto it:mp)
+        if(root==NULL)
+            return ans;
+        map<int,vector<pair<int,int>>>m;
+        fun(root,m,0,0);
+        for(auto it:m)
         {
             vector<int>tmp;
             sort(it.second.begin(),it.second.end());
@@ -36,6 +61,5 @@ public:
             ans.push_back(tmp);
         }
         return ans;
-    
     }
 };
