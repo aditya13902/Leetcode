@@ -1,37 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 #define ull unsigned long long
 class Solution {
 public:
-    int widthOfBinaryTree(TreeNode* root) {
-        ull maxWidth = 0;
-		
-		// queue's element will be pair<TreeNode*, int> 
-		// first attribute will be storing TreeNode* and int will be the index of the node at particular level
-		queue<pair<TreeNode*, int>> q;
-       
-        q.push({root, 0});
-		
-        while(!q.empty()) {
-            int n = q.size();
-            pair<TreeNode*, ull> p = q.front();
-            ull start =  p.second, end = p.second;
-            
-			// exploring all the nodes level wise  and pushing nodes of upcoming level
-			// and changing 'end' to keep track of last node at current particular level
-			
-            while(n--) {
-                p = q.front();
-                TreeNode *curNode = p.first;
-                ull curIdx = p.second;
-                end = curIdx;
-                
-                if(curNode->left != nullptr) q.push({curNode->left, 2*curIdx});
-                if(curNode->right != nullptr) q.push({curNode->right, 2*curIdx+1});
-                q.pop();
-            }
-			
-            maxWidth = max(maxWidth, end-start+1);
+    map<ull,vector<ull>>mp;
+    void helper(TreeNode* root,ull h,ull d){
+        if(!root){
+            return;
         }
-		
-        return maxWidth;
+        mp[h].push_back(d);
+        helper(root->left,h+1,2*d+1);
+        helper(root->right,h+1,2*d+2);
+        
+    }
+    int widthOfBinaryTree(TreeNode* root) {
+        helper(root,0,0);
+        ull ans=0;
+        for(auto ele:mp){
+            auto vec=ele.second;
+            sort(vec.begin(),vec.end());
+            ans=max(ans,vec[vec.size()-1]-vec[0]+1);
+        }
+        return ans;
     }
 };
