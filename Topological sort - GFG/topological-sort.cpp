@@ -22,15 +22,12 @@ class Solution
 	            q.push(i);
 	        }
 	    }
-	    vector<int>vis(V,0);
+	   // vector<int>vis(V,0);
 	    vector<int>ans;
 	    while(q.size()){
 	        int ele=q.front();
 	        q.pop();
-	        if(vis[ele]==1){
-	            continue;
-	        }
-	        vis[ele]=1;
+	        
 	        ans.push_back(ele);
 	        for(auto it:adj[ele]){
 	            indeg[it]--;
