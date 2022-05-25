@@ -16,10 +16,12 @@ public:
         for(auto ele:piles){
             e=max(ele,e);
         }
-        while(s<e){
+        int ans=e;
+        while(s<=e){
             int m=s+(e-s)/2;
             if(flag(piles,h,m)){
-                e=m;
+                ans=m;
+                e=m-1;
             }
             else{
                 s=m+1;
