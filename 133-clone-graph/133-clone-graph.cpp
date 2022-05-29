@@ -23,25 +23,17 @@ class Solution {
 public:
     unordered_map<Node*,Node*>mp;
     Node* cloneGraph(Node* node) {
-        if(!node){
-            return NULL;
-        } 
+        if(node==nullptr){
+            return node;
+        }
+        if(mp.find(node)!=mp.end()){
+            return mp[node];
+        }
         Node* copy=new Node(node->val);
         mp[node]=copy;
-        queue<Node*>q;
-        q.push(node);
-        while(q.size()){
-            Node* curr=q.front();
-            q.pop();
-            for(auto ptr:curr->neighbors){
-                if(mp.find(ptr)==mp.end()){
-                    Node* currnode=new Node(ptr->val);
-                    mp[ptr]=currnode;
-                    q.push(ptr);
-                }
-                mp[curr]->neighbors.push_back(mp[ptr]);
-            }
-            
+        for(auto ele:node->neighbors){
+            auto cpy_ele=cloneGraph(ele);
+            copy->neighbors.push_back(cpy_ele);
         }
         return copy;
     }
