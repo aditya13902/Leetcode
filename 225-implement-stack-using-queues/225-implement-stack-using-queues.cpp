@@ -14,19 +14,28 @@ public:
         q.push(ele);
     }
     void push(int x) {
-        rev();
         q.push(x);
-        rev();
     }
     
     int pop() {
+        if(q.size()==0){
+            return -1;
+        }
+        rev();
         int ele=q.front();
         q.pop();
+        rev();
         return ele;
     }
     
     int top() {
+        if(q.size()==0){
+            return -1;
+        }
+        rev();
         int ele=q.front();
+        // q.pop();
+        rev();
         return ele;
     }
     
