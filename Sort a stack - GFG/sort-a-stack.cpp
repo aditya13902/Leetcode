@@ -49,24 +49,24 @@ public:
 
 /* The below method sorts the stack s 
 you are required to complete the below method */
-void insert(stack<int>&s,int tmp){
-		if(s.size()==0 || s.top()<tmp){
-			s.push(tmp);
-			return;
-		}
-		int ele=s.top();
-		s.pop();
-		insert(s,tmp);
-		s.push(ele);
+void insert(stack<int>&s,int ele){
+    if(s.size()==0 || s.top()<ele){
+        s.push(ele);
+        return;
+    }
+    int tmp=s.top();
+    s.pop();
+    insert(s,ele);
+    s.push(tmp);
 }
 void SortedStack :: sort()
 {
    //Your code here
-   if(s.size()==0){
+   if(s.size()==0 || s.size()==1){
        return;
    }
-   int tmp=s.top();
+   int ele=s.top();
    s.pop();
    sort();
-   insert(s,tmp);
+   insert(s,ele);
 }
