@@ -15,13 +15,18 @@ class Solution{
     { 
         // Your code goes here
         stack<int>st;
-        vector<int>ans(arr.size(),-1);
-        for(int i=0;i<arr.size();i++){
-            while(st.size()!=0 && arr[st.top()]>arr[i]){
-                ans[st.top()]=arr[i];
-                st.pop();
+        vector<int>ans(n,-1);
+        for(int i=0;i<n;i++){
+            if(st.size()==0 || arr[st.top()]<arr[i]){
+                st.push(i);
             }
-            st.push(i);
+            else{
+                while(st.size() && arr[st.top()]>arr[i]){
+                    ans[st.top()]=arr[i];
+                    st.pop();
+                }
+                st.push(i);
+            }
         }
         return ans;
     } 
