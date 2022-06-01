@@ -1,24 +1,40 @@
 class Solution {
 public:
     vector<vector<int>>dp;
-    int helper(string A,string B,string C,int i,int j,int k){
-        if(i==A.size() && j==B.size() && k==C.size()){
-            return true;
-        }
+    bool helper(string s1,string s2,string s3,int i,int j,int k){
         if(dp[i][j]!=-1){
             return dp[i][j];
         }
-        int res=false;
-        if(i!=A.size() && A[i]==C[k]){
-            res|=helper(A,B,C,i+1,j,k+1);
+        if(i==s1.size() && j==s2.size() && k==s3.size()){
+            return true;
         }
-        if(j!=B.size() && B[j]==C[k]){
-            res|=helper(A,B,C,i,j+1,k+1);
+        if(i==s1.size()){
+            while(j<s2.size() && k<s3.size() && s2[j]==s3[k]){
+                j++;
+                k++;
+            }
+            return j==s2.size() && k==s3.size();
         }
-        return dp[i][j]=res;
+        if(j==s2.size()){
+            while(i<s1.size() && k<s3.size() && s1[i]==s3[k]){
+                i++;
+                k++;
+            }
+            return i==s1.size() && k==s3.size();
+        }
+        bool tmp=false;
+        if(s1[i]==s3[k]){
+            tmp|=helper(s1,s2,s3,i+1,j,k+1);
+        }
+        if(s2[j]==s3[k]){
+            tmp|=helper(s1,s2,s3,i,j+1,k+1);
+        }
+        return dp[i][j]=tmp;
     }
-    bool isInterleave(string A, string B, string C) {
-        dp.resize(A.size()+1,vector<int>(B.size()+1,-1));
-        return helper(A,B,C,0,0,0);
+    bool isInterleave(string s1, string s2, string s3) {
+        int n=s1.size();
+        int m=s2.size();
+        dp.resize(n+1,vector<int>(m+1,-1));
+        return helper(s1,s2,s3,0,0,0);
     }
 };
