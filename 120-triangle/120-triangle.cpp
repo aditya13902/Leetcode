@@ -1,19 +1,20 @@
 class Solution {
 public:
-    vector<vector<int>>dp;
-    int helper(vector<vector<int>>& triangle,int r,int c){
-        if(r>=triangle.size()){
-            return 0;
-        }
-        if(dp[r][c]!=-1){
-            return dp[r][c];
-        }
-        int a=triangle[r][c]+helper(triangle,r+1,c);
-        int b=triangle[r][c]+helper(triangle,r+1,c+1);
-        return dp[r][c]=min(a,b);     
-    }
     int minimumTotal(vector<vector<int>>& triangle) {
-        dp.resize(triangle.size(),vector<int>(triangle.size(),-1));
-        return helper(triangle,0,0);
+        int r=triangle.size();
+        int c=triangle[r-1].size();
+        vector<vector<int>>dp(r,vector<int>(c,INT_MIN));
+        int ans=INT_MAX;
+        for(int i=0;i<c;i++){
+            dp[r-1][i]=triangle[r-1][i];
+            ans=min(ans,triangle[r-1][i]);
+        }
+        for(int i=r-2;i>=0;i--){
+            for(int j=0;j<triangle[i].size();j++){
+                dp[i][j]=triangle[i][j]+min(dp[i+1][j],dp[i+1][j+1]);
+                ans=dp[i][j];
+            }
+        }
+        return ans;
     }
 };
