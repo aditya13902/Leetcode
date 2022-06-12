@@ -12,22 +12,18 @@ class Solution{
     public:
     int maxLen(vector<int>&A, int n)
     {   
-        // Your code here
-        vector<int>presum;
+        // Your code herevect
+        unordered_map<int,int>mp;
         int sum=0;
-        presum.push_back(0);
+        mp[0]=-1;
+        int ans=0;
         for(int i=0;i<n;i++){
             sum+=A[i];
-            presum.push_back(sum);
-        }
-        int ans=0;
-        unordered_map<int,int>mp;
-        for(int i=0;i<=n;i++){
-            if(mp.find(presum[i])==mp.end()){
-                mp[presum[i]]=i;
+            if(mp.find(sum)==mp.end()){
+                mp[sum]=i;
             }
             else{
-                ans=max(i-mp[presum[i]],ans);
+                ans=max(ans,i-mp[sum]);
             }
         }
         return ans;
