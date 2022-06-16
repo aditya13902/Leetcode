@@ -1,16 +1,17 @@
 class Solution {
 public:
-    vector<vector<int> >dp;
-    int minDistance(string& word1, string& word2) {
-        // dp[i][j] will denote minimum steps required to equalize word1[i:end] and word[2:j:end]
-        dp.resize(size(word1) + 1, vector<int>(size(word2) + 1, 1000));
-        return solve(word1, word2, 0, 0);
-    }
-    int solve(string &w1, string &w2, int i, int j) {
-        if(i == size(w1) && j == size(w2)) return 0;
-        if(i == size(w1) || j == size(w2)) return max(size(w1) - i, size(w2) - j);
-        if(dp[i][j] != 1000) return dp[i][j];  // directly return stored answer if already computed before
-        if(w1[i] == w2[j]) return solve(w1, w2, i + 1, j + 1);
-        return dp[i][j] = 1 + min(solve(w1, w2, i + 1, j), solve(w1, w2, i, j + 1));
+    int minDistance(string text1, string text2) {
+        vector<vector<int>>dp(text1.size()+1,vector<int>(text2.size()+1,0));
+        for(int i=1;i<=text1.size();i++){
+            for(int j=1;j<=text2.size();j++){
+                if(text1[i-1]==text2[j-1]){
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        return text1.size()+ text2.size()- 2*dp[text1.size()][text2.size()];
     }
 };
