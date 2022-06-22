@@ -1,19 +1,18 @@
 class Solution {
 public:
-    int color;
-    void helper(vector<vector<int>>& image, int sr, int sc, int newColor){
-        if(sr<0 || sc<0 || sr>=image.size() || sc>=image[0].size() || image[sr][sc]!=color || image[sr][sc]==newColor){
+    void fill(vector<vector<int>>& image, int i, int j, int color,int prev){
+        if(i<0 || j<0 || i>=image.size() || j>=image[0].size() || image[i][j]!=prev || image[i][j]==color){
             return;
         }
-        image[sr][sc]=newColor;
-        helper(image,sr+1,sc,newColor);
-        helper(image,sr,sc+1,newColor);
-        helper(image,sr,sc-1,newColor);
-        helper(image,sr-1,sc,newColor);
+        image[i][j]=color;
+        fill(image,i+1,j,color,prev);
+        fill(image,i,j-1,color,prev);
+        fill(image,i-1,j,color,prev);
+        fill(image,i,j+1,color,prev);
     }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        color=image[sr][sc];
-        helper(image,sr,sc,newColor);
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int curr=image[sr][sc];
+        fill(image,sr,sc,color,curr);
         return image;
     }
 };
