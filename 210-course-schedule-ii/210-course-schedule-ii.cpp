@@ -1,33 +1,45 @@
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int>indegree(numCourses,0);
-        vector<vector<int>>adj(numCourses);
-        for(int i=0;i<prerequisites.size();i++){
-            adj[prerequisites[i][1]].push_back(prerequisites[i][0]);
-            indegree[prerequisites[i][0]]++;
+    stack<int>st;
+    vector<int>vis;
+    bool helper(vector<vector<int>>&adj,int i,unordered_set<int>&s){
+        if(s.find(i)!=s.end()){
+            return false;
         }
-        queue<int>q;
-        for(int i=0;i<numCourses;i++){
-            if(indegree[i]==0){
-                q.push(i);
-            }
+        if(vis[i]){
+            return true;
+        }
+        vis[i]=1;
+        s.insert(i);
+        for(auto ele:adj[i]){
+            if(!helper(adj,ele,s)) return false;
+        }
+        s.erase(i);
+        st.push(i);
+        return true;
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
+        for(auto vec:prerequisites){
+            adj[vec[1]].push_back(vec[0]);
         }
         vector<int>ans;
-        while(q.size()){
-            ans.push_back(q.front());
-            int x=q.front();
-            q.pop();
-            for(auto ele:adj[x]){
-                indegree[ele]--;
-                if(indegree[ele]==0){
-                    q.push(ele);
-                }
+        // int col=1;
+        vis.resize(numCourses,0);
+        for(int i=0;i<numCourses;i++){
+            if(!vis[i]){
+                unordered_set<int>s;
+                if(!helper(adj,i,s)) return ans;
+                // col++;
+                
             }
         }
-        if(ans.size()!=numCourses){
-            vector<int>sub;
-            return sub;
+        // for(auto ele:vis){
+        //     cout<<ele<<endl;
+        // }
+        while(st.size()){
+            ans.push_back(st.top());
+            st.pop();
         }
         return ans;
     }
