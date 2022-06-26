@@ -17,7 +17,7 @@ public:
         else{
             minheap.push(num);
             if(minheap.size()>maxheap.size()){
-                cout<<minheap.top()<<endl;
+                // cout<<minheap.top()<<endl;
                 maxheap.push(minheap.top());
                 minheap.pop();
             }
