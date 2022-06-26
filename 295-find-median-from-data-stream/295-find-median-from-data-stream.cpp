@@ -1,34 +1,42 @@
 class MedianFinder {
 public:
-    priority_queue<int>maxpq;
-    priority_queue<int,vector<int>,greater<int>>minpq;
+    priority_queue<double>maxheap;
+    priority_queue<double,vector<double>,greater<double>>minheap;
     MedianFinder() {
         
     }
     
     void addNum(int num) {
-        if(maxpq.size()==0 || maxpq.top()>=num){
-            maxpq.push(num);
+        if(maxheap.size()==0 || maxheap.top()>=num){
+            maxheap.push(num);
+            if(maxheap.size()>minheap.size()+1){
+                minheap.push(maxheap.top());
+                maxheap.pop();
+            }    
         }
         else{
-            minpq.push(num);
+            minheap.push(num);
+            if(minheap.size()>maxheap.size()){
+                cout<<minheap.top()<<endl;
+                maxheap.push(minheap.top());
+                minheap.pop();
+            }
         }
+        // if(maxheap.size()){
+        //     cout<<"1"<<" "<<maxheap.top()<<endl;
+        // }
+        // if(minheap.size()){
+        //     cout<<"2"<<" "<<minheap.top()<<endl;
+        // }
         
-        if(maxpq.size()>minpq.size()+1){
-            minpq.push(maxpq.top());
-            maxpq.pop();
-        }
-        else if(maxpq.size()<minpq.size()){
-            maxpq.push(minpq.top());
-            minpq.pop();
-        }
+        
     }
     
     double findMedian() {
-        if(minpq.size()==maxpq.size()){
-            return minpq.top()/2.0+maxpq.top()/2.0;
+        if(maxheap.size()==minheap.size()){
+            return (minheap.top()+maxheap.top())/2.0;
         }
-        return maxpq.top();
+        return maxheap.top();
     }
 };
 
