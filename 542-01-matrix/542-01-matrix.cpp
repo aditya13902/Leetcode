@@ -1,44 +1,46 @@
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>>dis(n,vector<int>(m,-1));
         queue<pair<int,int>>q;
-        for(int i=0;i<mat.size();i++){
-            for(int j=0;j<mat[0].size();j++){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
                 if(mat[i][j]==0){
                     q.push({i,j});
-                }
-                else{
-                    mat[i][j]=-1;
+                    dis[i][j]=0;
                 }
             }
         }
         int d=0;
         while(q.size()){
             int l=q.size();
-            d++;
             while(l--){
-                auto top=q.front();
+                auto curr=q.front();
+                int x=curr.first;
+                int y=curr.second;
                 q.pop();
-                int r=top.first;
-                int c=top.second;
-                if(r+1<mat.size() && mat[r+1][c]==-1){
-                    mat[r+1][c]=d;
-                    q.push({r+1,c});
+                // cout<<x<<" "<<y<<endl;
+                if(x+1<n && dis[x+1][y]==-1){
+                    dis[x+1][y]=d+1;
+                    q.push({x+1,y});
                 }
-                if(r-1>=0 && mat[r-1][c]==-1){
-                    mat[r-1][c]=d;
-                    q.push({r-1,c});
+                if(x-1>=0 && dis[x-1][y]==-1){
+                    dis[x-1][y]=d+1;
+                    q.push({x-1,y});
                 }
-                if(c-1>=0 && mat[r][c-1]==-1){
-                    mat[r][c-1]=d;
-                    q.push({r,c-1});
+                if(y+1<m && dis[x][y+1]==-1){
+                    dis[x][y+1]=d+1;
+                    q.push({x,y+1});
                 }
-                if(c+1<mat[0].size() && mat[r][c+1]==-1){
-                    mat[r][c+1]=d;
-                    q.push({r,c+1});
+                if(y-1>=0 && dis[x][y-1]==-1){
+                    dis[x][y-1]=d+1;
+                    q.push({x,y-1});
                 }
             }
+            d++;
         }
-        return mat;
+        return dis;
     }
 };
