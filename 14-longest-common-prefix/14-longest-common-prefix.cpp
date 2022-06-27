@@ -8,20 +8,22 @@ public:
             n=min(n,siz);
         }
         // string ans="";
+        int idx=0;
         for(int i=1;i<=n;i++){
-            unordered_map<string,int>mp;
+            unordered_map<char,int>mp;
             for(auto str:strs){
-                string curr=str.substr(0,i);
+                char curr=str[i-1];
                 mp[curr]++;
             }
             if(mp.size()==1){
                 auto it=*mp.begin();
-                ans=it.first;
+                idx=i;
             }
             else{
                 break;
             }
         }
+        ans=strs[0].substr(0,idx);
         return ans;
     }
 };
