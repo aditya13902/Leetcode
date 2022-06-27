@@ -1,37 +1,33 @@
 class Solution {
 public:
-    vector<int>color;
     vector<int>vis;
-    bool flag;
-    vector<vector<int>>adj;
-    void dfs(int u,int curr){
-        if(color[u]!=-1 && color[u]!=curr){
-            flag=false;
+    int f=1;
+    void dfs(vector<vector<int>>&adj,int v,int col){
+        if(vis[v]!=0){
+            if(vis[v]!=col){
+                f=0;
+            }
+            // f=0;
             return;
         }
-        color[u]=curr;
-        if(vis[u]){
-            return;
-        }
-        vis[u]=1;
-        for(auto ele:adj[u]){
-            dfs(ele,curr xor 1);
+        vis[v]=col;
+        for(auto ele:adj[v]){
+            dfs(adj,ele,-col);
         }
     }
     bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
-        color.resize(n+1,-1);
-        vis.resize(n+1,0);
-        flag=true;
-        adj.resize(n+1);
-        for(int i=0;i<dislikes.size();i++){
-            adj[dislikes[i][0]].push_back(dislikes[i][1]);
-            adj[dislikes[i][1]].push_back(dislikes[i][0]);
+        vector<vector<int>>adj(n+1);
+        for(auto vec:dislikes){
+            adj[vec[0]].push_back(vec[1]);
+            adj[vec[1]].push_back(vec[0]);
         }
+        vis.resize(n+1,0);
         for(int i=1;i<=n;i++){
-            if(!vis[i]){
-                dfs(i,0);
+            if(vis[i]==0){
+                dfs(adj,i,1);
             }
         }
-        return flag;
+        return f;
+        
     }
 };
