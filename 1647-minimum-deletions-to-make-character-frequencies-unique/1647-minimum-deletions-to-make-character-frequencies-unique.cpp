@@ -13,12 +13,14 @@ public:
         while(pq.size()){
             int curr=pq.top();
             pq.pop();
-            if(pq.size() && curr==pq.top() && pq.top()!=0){
+            while(pq.size() && curr==pq.top()){
                 int ele=pq.top();
                 pq.pop();
-                pq.push(ele-1);
+                ele--;
+                if(ele>0){
+                    pq.push(ele);
+                }
                 cnt++;
-                pq.push(curr);
             }
         }
         return cnt;
