@@ -20,7 +20,7 @@ public:
                     ans.push_back({nums[i],nums[j],nums[k]});
                     int first=nums[j];
                     int last=nums[k];
-                    while(j<k && nums[j]==last){
+                    while(j<k && nums[j]==first){
                         j++;
                     }
                     while(j<k && nums[k]==last){
