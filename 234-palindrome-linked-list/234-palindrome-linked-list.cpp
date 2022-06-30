@@ -14,28 +14,35 @@ public:
         if(!node || !node->next){
             return node;
         }
-        auto ptr=rev(node->next);
+        ListNode* tmp=rev(node->next);
         node->next->next=node;
         node->next=NULL;
-        return ptr;
+        return tmp;
     }
     bool isPalindrome(ListNode* head) {
-        ListNode* walker=head;
-        ListNode* runner=head->next;
+        ListNode* dummy=new ListNode(-1);
+        dummy->next=head;
+        ListNode* walker=dummy;
+        ListNode* runner=dummy;
         while(runner && runner->next){
-            walker=walker->next;
             runner=runner->next->next;
+            walker=walker->next;
         }
         walker->next=rev(walker->next);
-        walker=walker->next;
-        while(walker){
-            if(walker->val!=head->val){
+        ListNode* ptr1=dummy->next;
+        ListNode*ptr2=walker->next;
+        // cout<<ptr1->val<<" "<<ptr1->val<<endl;
+        while(ptr2){
+            if(ptr1->val!=ptr2->val){
                 return false;
             }
-            walker=walker->next;
-            head=head->next;
+            ptr1=ptr1->next;
+            ptr2=ptr2->next;
         }
         return true;
         
     }
 };
+ //              r
+ // -1 1 2 3 2 1
+ //        w
