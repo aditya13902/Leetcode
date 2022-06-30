@@ -1,49 +1,44 @@
 class Solution {
 public:
+    int r,c;
     int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+        r=maze.size();
+        c=maze[0].size();
         queue<pair<int,int>>q;
-        int row=maze.size();
-        int col=maze[0].size();
         q.push({entrance[0],entrance[1]});
-        map<pair<int,int>,int>mp;
-        if(entrance[0]-1<0){
-            mp[{entrance[0]-1,entrance[1]}]=1;
-        }
-        if(entrance[0]+1>=row){
-            mp[{entrance[0]+1,entrance[1]}]=1;
-        }
-        if(entrance[1]-1<0){
-            mp[{entrance[0],entrance[1]-1}]=1;
-        }
-        if(entrance[1]+1>=col){
-            mp[{entrance[0],entrance[1]+1}]=1;
-        }
-        int d=-1;
-        // int ans=
+        // maze[entrance[0]][entrance[1]]='+';
+        int d=0;
+        int px=entrance[0];
+        int py=entrance[1];
         while(q.size()){
             int l=q.size();
             while(l--){
                 auto [x,y]=q.front();
                 q.pop();
-                if(mp[{x,y}]){
+                if(maze[x][y]=='+'){
                     continue;
                 }
-                if(x<0 || x>=row || y<0 ||y>=col){
+                if(!(x==px && y==py) && (x==0 || x==r-1 ||y==0 ||y==c-1)){
                     return d;
                 }
-                if(maze[x][y]!='.'){
-                    continue;
-                }
                 maze[x][y]='+';
-                q.push({x-1,y});
-                q.push({x+1,y});
-                q.push({x,y-1});
-                q.push({x,y+1});
+                if(x-1>=0){
+                    q.push({x-1,y});
+                }
+                if(x+1<r){
+                    q.push({x+1,y});
+                }
+                if(y-1>=0){
+                    q.push({x,y-1});
+                }
+                if(y+1<c){
+                    q.push({x,y+1});
+                }
+                
             }
-            if(q.size()){
-                d++;
-            }
+            d++;
         }
         return -1;
+        
     }
 };
