@@ -17,11 +17,11 @@ public:
             e=max(ele,e);
         }
         int ans=e;
-        while(s<=e){
+        while(s<e){
             int m=s+(e-s)/2;
             if(flag(piles,h,m)){
-                ans=m;
-                e=m-1;
+                // ans=m;
+                e=m;
             }
             else{
                 s=m+1;
