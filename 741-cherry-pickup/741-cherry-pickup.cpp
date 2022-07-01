@@ -14,7 +14,7 @@ public:
         }
         
         int ans=grid[r1][c1];
-        if(c1!=c2){
+        if(r1!=r2){
             ans+=grid[r2][c2];
         }
         int pick=max(helper(grid,r1,c1+1,c2+1),helper(grid,r1+1,c1,c2));
