@@ -8,7 +8,7 @@ public:
         {
             if (numbers[l] + numbers[r] == target)
             {
-                return vector<int>{ l + 1,r + 1 };
+                return {l+1,r+1};
                  // res;
             }
             else if (numbers[l] + numbers[r] > target)
