@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<vector<int>>dp;
+    // vector<vector<int>>dp;
     // bool divide(vector<int>&nums,int tot,int idx){
     //     if(tot==0) return true;
     //     if(idx==nums.size()){
@@ -22,7 +22,7 @@ public:
         if(tot%2){
             return false;
         }
-        dp.resize((tot/2)+1,vector<int>(nums.size(),0));
+        // dp.resize((tot/2)+1,vector<int>(nums.size(),0));
         // return divide(nums,tot/2,0);
         // for(int i=0;i<nums.size();i++){
         //     dp[0][i]=1;
