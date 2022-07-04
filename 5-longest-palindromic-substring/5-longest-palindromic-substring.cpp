@@ -9,6 +9,7 @@ public:
         // ans+=s[0];
         vector<vector<int>>dp(s.size(),vector<int>(s.size(),false));
         // for(int i=0;i<s.size();)
+        int sidx=0;
         for(int l=1;l<=s.size();l++){
             for(int i=0;i<=s.size()-l;i++){
                 int j=i+l-1;
@@ -21,11 +22,11 @@ public:
                     dp[i][j]=false;
                 }
                 if( dp[i][j] && l>siz){
-                    ans=s.substr(i,l);
+                    sidx=i;
                     siz=l;
                 }
             }
         }
-        return ans;
+        return s.substr(sidx,siz);
     }
 };
