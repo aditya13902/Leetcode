@@ -2,22 +2,18 @@ class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         unordered_set<string>st;
-        for(auto str:wordDict){
-            st.insert(str);
+        for(auto ele:wordDict){
+            st.insert(ele);
         }
-        vector<int>dp(s.size()+1,0);
-        dp[0]=1;
+        vector<int>dp(s.size()+1,false);
+        dp[0]=true;
         for(int i=1;i<=s.size();i++){
-            for(int j=0;j<i;j++){
-                
+            for(int j=i-1;j>=0;j--){
                 if(dp[j]){
-                    // cout<<sub<<endl;
-                    string sub=s.substr(j,i-j);
-                    if(st.find(sub)!=st.end()){
-                        // cout<<i<<endl;
-                        dp[i]=1;
+                    string curr=s.substr(j,i-j);
+                    if(st.find(curr)!=st.end()){
+                        dp[i]=true;
                     }
-                    
                 }
             }
         }
