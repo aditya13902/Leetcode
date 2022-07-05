@@ -8,9 +8,9 @@ public:
             if(m[a[j]] == 0) count++;
             m[a[j]]++;
             
-            while(count>k){
+            while(m.size()>k){
                 m[a[i]]--;
-                if(m[a[i]] == 0) count--;
+                if(m[a[i]] == 0) m.erase(a[i]);
                 i++;
             }
             maxLen = max(j-i+1, maxLen);
