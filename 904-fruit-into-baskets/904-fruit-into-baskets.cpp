@@ -5,14 +5,13 @@ public:
         unordered_map<int, int> m;
 
         for(int j=0; j<a.size(); j++){
+            if(m[a[j]] == 0) count++;
             m[a[j]]++;
-            if(m[a[j]] == 1) count++;
-            if(count > k){
-                while(count>k){
-                    m[a[i]]--;
-                    if(m[a[i]] == 0) count--;
-                    i++;
-                }
+            
+            while(count>k){
+                m[a[i]]--;
+                if(m[a[i]] == 0) count--;
+                i++;
             }
             maxLen = max(j-i+1, maxLen);
         }
