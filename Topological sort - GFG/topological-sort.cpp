@@ -7,43 +7,30 @@ class Solution
 {
 	public:
 	//Function to return list containing vertices in Topological order. 
+	stack<int>st;
+	unordered_map<int,int>mp;
+	void helper(vector<int>adj[],int v){
+	    if(mp[v]){
+	        return;
+	    }
+	    mp[v]=1;
+	    for(auto ele:adj[v]){
+	        helper(adj,ele);
+	    }
+	    st.push(v);
+	}
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
-	    vector<int>indeg(V,0);
 	    for(int i=0;i<V;i++){
-	        for(auto ele:adj[i]){
-	            indeg[ele]++;
-	        }
+	        helper(adj,i);
 	    }
-	    queue<int>q;
-	    for(int i=0;i<V;i++){
-	        if(indeg[i]==0){
-	            q.push(i);
-	        }
-	    }
-	    unordered_map<int,int>mp;
 	    vector<int>ans;
-	    while(q.size()){
-	        int l=q.size();
-	        while(l--){
-	            int ele=q.front();
-	            q.pop();
-	            if(mp[ele]){
-	                continue;
-	            }
-	            mp[ele]=1;
-	            ans.push_back(ele);
-	            for(auto v:adj[ele]){
-	                indeg[v]--;
-	                if(indeg[v]==0){
-	                    q.push(v);
-	                }
-	            }
-	        }
+	    while(st.size()){
+	        ans.push_back(st.top());
+	        st.pop();
 	    }
 	    return ans;
-	    
 	}
 };
 
