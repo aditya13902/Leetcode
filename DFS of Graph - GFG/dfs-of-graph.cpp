@@ -6,23 +6,22 @@ using namespace std;
 class Solution {
   public:
     // Function to return a list containing the DFS traversal of the graph.
-    unordered_set<int>vis;
     vector<int>ans;
-    void helper(int i,vector<int> adj[]){
-        ans.push_back(i);
-        vis.insert(i);
-        for(auto ele:adj[i]){
-            if(vis.find(ele)!=vis.end()){
-                continue;
-            }
-            helper(ele,adj);
+    unordered_map<int,int>vis;
+    void helper(vector<int>adj[],int vx){
+        if(vis[vx]){
+            return;
+        }
+        ans.push_back(vx);
+        vis[vx]=1;
+        for(auto ele:adj[vx]){
+            helper(adj,ele);
         }
     }
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         // Code here
-        helper(0,adj);
+        helper(adj,0);
         return ans;
-        
     }
 };
 
