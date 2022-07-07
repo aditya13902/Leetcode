@@ -13,24 +13,30 @@ class Solution{
     int findPlatform(int arr[], int dep[], int n)
     {
     	// Your code here
-    	sort(arr,arr+n);
-    	sort(dep,dep+n);
-    	int i=1;
-    	int j=0;
-    	int cnt=1;
-    	int ans=1;
-    	while(i<n && j<n){
-    	    if(dep[j]>=arr[i]){
-    	        i++;
+    	vector<pair<int,int>>tym;
+    	for(int i=0;i<n;i++){
+    	    tym.push_back({arr[i],dep[i]});
+    	}
+    	sort(tym.begin(),tym.end());
+    	priority_queue<int,vector<int>,greater<int>>pq;
+    	int cnt=0;
+    	int mx=0;
+    	for(int i=0;i<n;i++){
+    	    if(pq.size()==0 || pq.top()>=tym[i].first){
     	        cnt++;
+    	        pq.push(tym[i].second);
     	    }
     	    else{
-    	        j++;
-    	        cnt--;
+    	        while(pq.size() && pq.top()<tym[i].first){
+    	            cnt--;
+    	            pq.pop();
+    	        }
+    	        cnt++;
+    	        pq.push(tym[i].second);
     	    }
-    	    ans=max(cnt,ans);
+    	    mx=max(mx,cnt);
     	}
-    	return ans;
+    	return mx;
     }
 };
 
