@@ -11,37 +11,35 @@
  */
 class Solution {
 public:
-    TreeNode* first;
-    TreeNode* second;
-    TreeNode* middle;
-    TreeNode* prev;
+    vector<int>store;
+    unordered_map<int,TreeNode*>mp;
     void inorder(TreeNode* root){
-        if(!root){
-            return;
-        }
+        if(!root) return;
         inorder(root->left);
-        if(prev!=NULL && (root->val<prev->val)){
-            if(first==NULL){
-                first=prev;
-                middle=root;
-            }
-            else{
-                second=root;
-            }
-            
-        }
-        prev=root;
+        store.push_back(root->val);
+        mp[root->val]=root;
         inorder(root->right);
     }
     void recoverTree(TreeNode* root) {
-        prev=NULL;
-        second=NULL;
-        first=NULL;
         inorder(root);
-        if(first && second){
+        TreeNode* first=NULL;
+        TreeNode* middle=NULL;
+        TreeNode* second=NULL;
+        for(int i=0;i<store.size()-1;i++){
+            if(store[i]>store[i+1]){
+                if(first==nullptr){
+                    first=mp[store[i]];
+                    middle=mp[store[i+1]];
+                }
+                else{
+                    second=mp[store[i+1]];
+                }
+            }
+        }
+        if(second){
             swap(first->val,second->val);
         }
-        else if(first && middle){
+        else{
             swap(first->val,middle->val);
         }
     }
