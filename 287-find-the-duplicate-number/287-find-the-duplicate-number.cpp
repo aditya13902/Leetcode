@@ -8,9 +8,9 @@ public:
             }
             else{
                 if(nums[nums[idx]-1]==nums[idx]){
-                    return nums[idx];
+                    return nums[idx]; 
                 }
-                swap(nums[nums[idx]-1],nums[idx]);
+                swap(nums[idx],nums[nums[idx]-1]);
             }
         }
         return -1;
