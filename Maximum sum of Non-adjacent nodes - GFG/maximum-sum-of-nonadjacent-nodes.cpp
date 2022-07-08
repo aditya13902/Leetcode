@@ -104,27 +104,21 @@ struct Node
 class Solution{
   public:
     //Function to return the maximum sum of non-adjacent nodes.
-    map<pair<Node*,int>,int>mp;
-    int helper(Node* root,int f){
+    pair<int,int> helper(Node*root){
         if(!root){
-            return 0;
+            return {0,0};
         }
-        if(mp.find({root,f})!=mp.end()){
-            return mp[{root,f}];
-        }
-        if(f){
-            int p1=helper(root->left,!f)+root->data+helper(root->right,!f);
-            int p2=helper(root->left,f)+helper(root->right,f);
-            return mp[{root,f}]=max(p1,p2);
-        }
-        else{
-            return mp[{root,f}]=helper(root->left,!f)+helper(root->right,!f);
-        }
+        auto l=helper(root->left);
+        auto r=helper(root->right);
+        int include=root->data+l.second+r.second;
+        int exclude=max(l.first,l.second)+max(r.first,r.second);
+        return {include,exclude};
     }
     int getMaxSum(Node *root) 
     {
         // Add your code here
-        return helper(root,1);
+        auto ans=helper(root);
+        return max(ans.first,ans.second);
     }
 };
 
