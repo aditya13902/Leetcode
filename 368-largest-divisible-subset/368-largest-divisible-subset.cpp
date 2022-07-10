@@ -3,37 +3,29 @@ public:
     vector<int> largestDivisibleSubset(vector<int>& nums) {
         sort(nums.begin(),nums.end());
         vector<int>dp(nums.size(),1);
-        vector<int>hash(nums.size());
-        for(int i=0;i<nums.size();i++){
-            hash[i]=i;
-        }
-        int ans=0;
-        int lastidx=0;
+        vector<int>hash(nums.size(),0);
+        int mx=1;
+        int idx=0;
         for(int i=1;i<nums.size();i++){
-            for(int j=0;j<i;j++){
-                if(nums[i]%nums[j]){
-                    continue;
-                }
-                if(dp[i]<1+dp[j]){
+            hash[i]=i;
+            for(int j=i-1;j>=0;j--){
+                if(nums[i]%nums[j]) continue;
+                if(dp[i]<dp[j]+1){
                     dp[i]=1+dp[j];
                     hash[i]=j;
                 }
-                
-                
             }
-            if(dp[i]>ans){
-                lastidx=i;
-                ans=dp[i];
+            if(mx<dp[i]){
+                mx=dp[i];
+                idx=i;
             }
         }
-        vector<int>temp;
-        temp.push_back(nums[lastidx]);
-        while(hash[lastidx]!=lastidx){
-            lastidx=hash[lastidx];
-            temp.push_back(nums[lastidx]);
+        vector<int>ans;
+        while(idx!=hash[idx]){
+            ans.push_back(nums[idx]);
+            idx=hash[idx];
         }
-        reverse(temp.begin(),temp.end());
-        return temp;
-        
+        ans.push_back(nums[idx]);
+        return ans;
     }
 };
