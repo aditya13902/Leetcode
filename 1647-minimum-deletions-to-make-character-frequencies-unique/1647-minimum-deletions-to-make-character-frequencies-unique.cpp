@@ -2,23 +2,27 @@ class Solution {
 public:
     int minDeletions(string s) {
         unordered_map<char,int>mp;
+        priority_queue<int>pq;
         for(auto ch:s){
             mp[ch]++;
         }
-        priority_queue<int>pq;
         for(auto it:mp){
             pq.push(it.second);
         }
         int cnt=0;
-        while(pq.size()){
-            int curr=pq.top();
+        while(pq.size()>1){
+            int t1=pq.top();
             pq.pop();
-            if(pq.size() && curr==pq.top() && pq.top()!=0){
-                int ele=pq.top();
-                pq.pop();
-                pq.push(ele-1);
+            int t2=pq.top();
+            pq.pop();
+            if(t1==t2){
                 cnt++;
-                pq.push(curr);
+                t2--;
+                if(t1) pq.push(t1);
+                if(t2) pq.push(t2);
+            }
+            else{
+                pq.push(t2);
             }
         }
         return cnt;
