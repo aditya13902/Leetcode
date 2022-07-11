@@ -22,7 +22,8 @@ public:
         traverse(root->right,mx);
     }
     int goodNodes(TreeNode* root) {
-        traverse(root,INT_MIN);
+        if(!root) return 0;
+        traverse(root,root->val);
         return cnt;
     }
 };
