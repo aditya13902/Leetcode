@@ -1,24 +1,24 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        unordered_map<char,int>mp;
+        unordered_map<int,int>mp;
         for(int i=0;i<s.size();i++){
             mp[s[i]]=i;
         }
         int i=0;
-        int j=-1;
-        vector<int>ans;
+        int cnt;
+        vector<int>vec;
         while(i<s.size()){
-            j=mp[s[i]];
-            int cnt=0;
-            while(i<s.size() && i<=j){
+            int j=mp[s[i]];
+            cnt=0;
+            while(i<=j){
                 j=max(j,mp[s[i]]);
                 cnt++;
                 i++;
             }
-            ans.push_back(cnt);
+            vec.push_back(cnt);
         }
-        return ans;
+        return vec;
         
     }
 };
