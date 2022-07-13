@@ -1,21 +1,23 @@
 class Solution {
 public:
-    
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        multiset<int>st;
+        priority_queue<pair<int,int>>pq;
         for(int i=0;i<k;i++){
-            st.insert(nums[i]);
+            pq.push({nums[i],i});
         }
-        int s=0;
         int e=k;
         vector<int>res;
         while(e<nums.size()){
-            res.push_back(*(--st.end()));
-            st.erase(st.find(nums[s]));
-            st.insert(nums[e++]);
-            s++;
+            auto curr=pq.top();
+            res.push_back(curr.first);
+            while(pq.size() && pq.top().second<=e-k){
+                pq.pop();
+            }
+            pq.push({nums[e],e});
+            e++;
         }
-        res.push_back(*(--st.end()));
+        while(pq.top().second<e-k) pq.pop();
+        res.push_back(pq.top().first);
         return res;
     }
 };
