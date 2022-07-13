@@ -20,6 +20,6 @@ public:
             // cout<<verticalCuts[i+1]-verticalCuts[i]<<endl;
             diffcol=max(diffcol,(long long)verticalCuts[i+1]-(long long)verticalCuts[i]);
         }
-        return ((diffrow%N)*(diffcol%N)%(N));
+        return ((diffrow)*(diffcol)%(N));
     }
 };
