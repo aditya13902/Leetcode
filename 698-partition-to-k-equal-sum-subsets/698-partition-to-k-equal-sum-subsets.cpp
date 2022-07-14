@@ -1,32 +1,31 @@
 class Solution {
 public:
-    bool solve(vector<int> nums,vector<bool>& visited,int currsum,int idx,int subsetsum,int k){
-        if(k==0)return true;
-        if(currsum>subsetsum)return false;
-        if(currsum==subsetsum){
-            return solve(nums,visited,0,0,subsetsum,k-1);
+    int div;
+    bool helper(vector<int>&nums,int sum,int k,int idx,vector<int>&vis){
+        if(k==0){
+            return true;
         }
+        if(sum==div){
+            return helper(nums,0,k-1,0,vis);
+        }
+        int f=0;
         for(int i=idx;i<nums.size();i++){
-            if(visited[i])continue;
-            visited[i] = true;
-            if(solve(nums,visited,currsum+nums[i],i+1,subsetsum,k))return true;
-            visited[i] = false;
-			//optimization 
-            if(currsum==0)break;
+            if(vis[i] || sum+nums[i]>div || (i>0 && nums[i]==nums[i-1] && !vis[i-1])) continue;
+            vis[i]=true;
+            if(helper(nums,sum+nums[i],k,i+1,vis)) return true;
+            vis[i]=false;
         }
         return false;
     }
     bool canPartitionKSubsets(vector<int>& nums, int k) {
-        int n = nums.size();
-        if(k > n)return false;
         int sum=0;
-        for(auto n : nums)
-            sum += n;
-       if (nums.size() < k || sum % k) return false;
-        int subsetsum = sum/k;
-        vector<bool> v(n,false);
-		//sort array in decreasing order
-        sort(nums.begin(), nums.end(), greater<int>());
-        return solve(nums,v,0,0,subsetsum,k);
+        for(auto ele:nums) sum+=ele;
+        
+        if(nums.size()<k || sum%k) return false;
+        vector<int>vis(nums.size(),false);
+        
+        div=sum/k;
+        sort(nums.begin(),nums.end(),greater<int>());
+        return helper(nums,0,k,0,vis);
     }
 };
