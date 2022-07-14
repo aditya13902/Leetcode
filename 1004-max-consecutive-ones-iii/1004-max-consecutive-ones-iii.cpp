@@ -6,22 +6,15 @@ public:
         int cnt=0;
         int ans=0;
         while(j<nums.size()){
-            
-            if(nums[j]==1){
-                j++;
-            }
-            else{
-                j++;
-                cnt++;
-                while(cnt>k){
-                    if(nums[i]==0){
-                        cnt--;
-                    }
-                    i++;
+            if(nums[j]==0) cnt++;
+            while(cnt>k){
+                if(nums[i]==0){
+                    cnt--;
                 }
+                i++;
             }
-            ans=max(ans,j-i);
-            
+            ans=max(ans,j-i+1);
+            j++;
         }
         return ans;
     }
