@@ -2,45 +2,37 @@ class Solution {
 public:
     stack<int>st;
     vector<int>vis;
-    bool helper(vector<vector<int>>&adj,int i,unordered_set<int>&s){
-        if(s.find(i)!=s.end()){
-            return false;
+    bool helper(int v,vector<vector<int>>&adj,unordered_set<int>&mp){
+        if(mp.find(v)!=mp.end()) return false;
+        if(vis[v]) return true;
+        mp.insert(v);
+        vis[v]=1;
+        for(auto ele:adj[v]){
+            if(helper(ele,adj,mp)==false) return false;
+
         }
-        if(vis[i]){
-            return true;
-        }
-        vis[i]=1;
-        s.insert(i);
-        for(auto ele:adj[i]){
-            if(!helper(adj,ele,s)) return false;
-        }
-        s.erase(i);
-        st.push(i);
+        mp.erase(v);
+        st.push(v);
         return true;
     }
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>>adj(numCourses);
-        for(auto vec:prerequisites){
+    vector<int> findOrder(int num, vector<vector<int>>& pre) {
+        vector<vector<int>>adj(num);
+        for(auto vec:pre){
             adj[vec[1]].push_back(vec[0]);
         }
         vector<int>ans;
-        // int col=1;
-        vis.resize(numCourses,0);
-        for(int i=0;i<numCourses;i++){
-            if(!vis[i]){
-                unordered_set<int>s;
-                if(!helper(adj,i,s)) return ans;
-                // col++;
-                
+        vis.resize(num,0);
+        for(int i=0;i<num;i++){
+            if(vis[i]==0){
+                unordered_set<int>mp;
+                if(!helper(i,adj,mp)) return ans;
             }
         }
-        // for(auto ele:vis){
-        //     cout<<ele<<endl;
-        // }
         while(st.size()){
             ans.push_back(st.top());
             st.pop();
         }
         return ans;
+        
     }
 };
