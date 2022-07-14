@@ -1,14 +1,17 @@
 class Solution {
 public:
     int arrangeCoins(int n) {
-        int i=1;
+        int row=1;
         int cnt=0;
-        while(n>0){
-            if(n>=i){
+        while(n){
+            if(n>=row){
+                n-=row;
+                row++;
                 cnt++;
             }
-            n-=i;
-            i++;
+            else{
+                break;
+            }
         }
         return cnt;
     }
