@@ -1,18 +1,18 @@
-class Solution {
-public:
-    int singleNumber(vector<int>& nums) {
-        unordered_map<int,int>mp;
-        for(auto ele:nums){
-            mp[ele]++;
-        }
-        for(auto itr:mp){
-            if(itr.second==1){
-                return itr.first;
-            }
-        }
-        return -1;
-    }
-};
+// class Solution {
+// public:
+//     int singleNumber(vector<int>& nums) {
+//         unordered_map<int,int>mp;
+//         for(auto ele:nums){
+//             mp[ele]++;
+//         }
+//         for(auto itr:mp){
+//             if(itr.second==1){
+//                 return itr.first;
+//             }
+//         }
+//         return -1;
+//     }
+// };
 // class Solution {
 // public:
 //     int singleNumber(vector<int>& nums) {
@@ -28,13 +28,13 @@ public:
 //         return *st.begin();
 //     }
 // };
-// class Solution {
-// public:
-//     int singleNumber(vector<int>& nums) {
-//         int ans=0;
-//         for(auto ele:nums){
-//             ans=ans^ele;
-//         }
-//         return ans;
-//     }
-// };
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int ans=0;
+        for(auto ele:nums){
+            ans=ans^ele;
+        }
+        return ans;
+    }
+};
