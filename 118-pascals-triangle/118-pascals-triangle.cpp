@@ -2,11 +2,15 @@ class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
         vector<vector<int>>ans;
-        ans.push_back({1});
-        for(int i=2;i<=numRows;i++){
-            vector<int>subans(i,1);
-            for(int j=1;j<i-1;j++){
-                subans[j]=ans[i-2][j-1]+ans[i-2][j];
+        for(int i=0;i<numRows;i++){
+            vector<int>subans;
+            for(int j=0;j<=i;j++){
+                if(j==0 || j==i){
+                    subans.push_back(1);
+                }
+                else{
+                    subans.push_back(ans[i-1][j-1]+ans[i-1][j]);
+                }
             }
             ans.push_back(subans);
         }
