@@ -5,14 +5,16 @@ public:
         int r=arr.size()-1;
         while(l<=r){
             int m=(l+r)/2;
-            int miss=arr[m]-m;
-            if(miss<=k){
+            if(arr[m]-(m+1)<k){
                 l=m+1;
             }
             else{
                 r=m-1;
             }
         }
-        return l+k;
+        if(r==-1){
+             return k;
+        }
+        return arr[r]+(k-(arr[r]-(r+1)));
     }
 };
