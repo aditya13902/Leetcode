@@ -6,17 +6,15 @@ public:
         int k=0;
         while(k<=j){
             if(nums[k]==0){
-                swap(nums[i],nums[k]);
-                i++;
-                k++;
+                swap(nums[k++],nums[i++]);
             }
             else if(nums[k]==2){
-                swap(nums[k],nums[j]);
-                j--;
+                swap(nums[k],nums[j--]);
             }
             else{
                 k++;
             }
         }
+        
     }
 };
