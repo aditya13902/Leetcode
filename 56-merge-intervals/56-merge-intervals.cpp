@@ -17,6 +17,5 @@ public:
         }
         ans.push_back({s,e});
         return ans;
-        
     }
 };
