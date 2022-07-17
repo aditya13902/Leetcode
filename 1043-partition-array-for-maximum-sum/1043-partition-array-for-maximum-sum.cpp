@@ -1,19 +1,15 @@
 class Solution {
 public:
-    vector<int>dp;
-    int helper(vector<int>&arr,int idx,int k){
-        if(idx==arr.size()) return 0;
-        if(dp[idx]!=-1) return dp[idx];
-        int mx=0;
-        int ans=0;
-        for(int i=idx;i<idx+k && i<arr.size();i++){
-            mx=max(mx,arr[i]);
-            ans=max(ans,mx*(i-idx+1)+helper(arr,i+1,k));
-        }
-        return dp[idx]=ans;
-    }
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        dp.resize(arr.size(),-1);
-        return helper(arr,0,k);
+        vector<int>dp(arr.size()+1,0);
+        dp[1]=arr[0];
+        for(int i=2;i<=arr.size();i++){
+            int currmx=0;
+            for(int j=1;j<=k && i-j>=0;j++){
+                currmx=max(currmx,arr[i-j]);
+                dp[i]=max(dp[i],currmx*j+dp[i-j]);
+            }
+        }
+        return dp[arr.size()];
     }
 };
