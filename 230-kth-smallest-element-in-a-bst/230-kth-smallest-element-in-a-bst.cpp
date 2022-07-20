@@ -19,6 +19,7 @@ public:
         cnt--;
         if(cnt==0){
             ans=root->val;
+            return;
         }
         inorder(root->right);
     }
