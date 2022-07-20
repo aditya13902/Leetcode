@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[1000][1000];
+    int dp[50][50];
     bool memo(string s,string p,int i,int j){
         if(i>=s.size() && j>=p.size()) return true;
         if(j>=p.size()) return false;
@@ -16,8 +16,8 @@ public:
         return false;
     }
     bool isMatch(string s, string p) {
-        for(int i=0;i<1000;i++){
-            for(int j=0;j<1000;j++){
+        for(int i=0;i<50;i++){
+            for(int j=0;j<50;j++){
                 dp[i][j]=-1;
             }
         }
