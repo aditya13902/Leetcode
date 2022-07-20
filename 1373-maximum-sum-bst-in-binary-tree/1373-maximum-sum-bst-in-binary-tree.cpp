@@ -12,35 +12,33 @@
 class bst{
 public:
     int sum;
-    int mx;
     int mn;
-    bst(int sum,int mx,int mn){
+    int mx;
+    bst(int sum,int mn,int mx){
         this->sum=sum;
-        this->mx=mx;
         this->mn=mn;
+        this->mx=mx;
     }
+    
 };
-
 class Solution {
-public:
+private:
     int ans=0;
     bst* helper(TreeNode* root){
         if(!root){
-            bst* bstnode=new bst(0,INT_MIN,INT_MAX);
-            return bstnode;
+            return new bst(0,INT_MAX,INT_MIN);
         }
-        bst* l= helper(root->left);
-        bst* r= helper(root->right);
+        bst* l=helper(root->left);
+        bst* r=helper(root->right);
         if(root->val>l->mx && root->val<r->mn){
-            int suml=l->sum;
-            int sumr=r->sum;
-            ans=max(suml+sumr+root->val,ans);
-            return new bst(suml+sumr+root->val,max(root->val,r->mx),min(root->val,l->mn));
+            ans=max(ans,root->val+l->sum+r->sum);
+            return new bst(root->val+l->sum+r->sum,min(root->val,l->mn),max(root->val,r->mx));
         }
-        return new bst(max(l->sum,r->sum),INT_MAX,INT_MIN);
+        return new bst(max(l->sum,r->sum),INT_MIN,INT_MAX);
     }
+public:
     int maxSumBST(TreeNode* root) {
-        auto bstnode=helper(root);
+        helper(root);
         return ans;
     }
 };
