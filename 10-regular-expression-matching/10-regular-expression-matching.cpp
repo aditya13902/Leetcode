@@ -1,59 +1,28 @@
 class Solution {
-    public:
-    
-    bool helper(string str, string pat, int i, int j, vector<vector<int>> &dp){
+public:
+    int dp[21][31];
+    bool memo(string &s,string &t,int i,int j){
+        if(i>=s.size() && j>=t.size()) return true;
+        if(j>=t.size()) return false;
         
-        if(i >= str.size() && j >= pat.size()){
-            return true;
+        if(dp[i][j]!=-1){
+             return dp[i][j];
         }
-       
-        if(j >= pat.size()){
-            return false;
-        } 
-        
-        if(dp[i][j] != -1){
-            return dp[i][j];
+        bool flag=(i<s.size() && ( s[i]==t[j] || t[j]=='.' ));
+        if(j+1<t.size() && t[j+1]=='*'){
+            return dp[i][j]= memo(s,t,i,j+2) || (flag && i<s.size() && memo(s,t,i+1,j));
         }
-        
-        if(i >= str.size()){
-            
-            if(pat[j + 1] == '*'){
-                
-                return dp[i][j] = helper(str, pat, i, j + 2, dp);
-            }
-            
-            return false;
+        else if(flag){
+            return dp[i][j]=memo(s,t,i+1,j+1);
         }
-        
-        if(j + 1 < pat.size() && pat[j + 1] == '*'){
-            
-              if(pat[j] == '.' || pat[j] == str[i])
-              {
-                  return dp[i][j] = (helper(str, pat, i + 1, j, dp) || helper(str, pat, i, j + 2, dp));
-              }
-            
-              else{
-                  
-                  return dp[i][j] = helper(str, pat, i, j + 2, dp);
-              }   
-        }
-        
-        else if (pat[j] == '.' || pat[j] == str[i])
-        {
-            return dp[i][j] = helper(str, pat, i + 1, j + 1, dp);
-        }
-        
-        return dp[i][j] = false;   
+        return dp[i][j]=false;
     }
-    
-    bool isMatch(string str, string pat) {
-        
-        int n = str.size();
-        
-        int m = pat.size();
-        
-        vector<vector<int> > dp(n + 1, vector<int> (m + 1, -1));
-        
-        return helper(str, pat, 0, 0, dp) ? true : false;
+    bool isMatch(string s, string p) {
+        for(int i=0;i<=20;i++){
+            for(int j=0;j<=30;j++){
+                dp[i][j]=-1;
+            }
+        }
+        return memo(s,p,0,0);
     }
 };
