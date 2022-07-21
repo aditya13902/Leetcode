@@ -1,9 +1,11 @@
 class Solution {
 public:
-    // int mx=0;
-    bool pali(string s,int i,int j){
+    vector<vector<string>>ans;
+    bool pali(string str){
+        int i=0;
+        int j=str.size()-1;
         while(i<j){
-            if(s[i]!=s[j]){
+            if(str[i]!=str[j]){
                 return false;
             }
             i++;
@@ -11,24 +13,23 @@ public:
         }
         return true;
     }
-    vector<vector<string>>ans;
-    void helper(string s,vector<string>&vec,int idx){
-        if(idx>=s.size()){
-            // mx=max(vec.size(),mx);
-            ans.push_back(vec);
+    void helper(string s,int idx,string str,vector<string>&curr){
+        if(idx==s.size()){
+            ans.push_back(curr);
             return;
         }
         for(int i=idx;i<s.size();i++){
-            if(pali(s,idx,i)){
-                vec.push_back(s.substr(idx,i-idx+1));
-                helper(s,vec,i+1);
-                vec.pop_back();
+            str+=s[i];
+            if(pali(str)){
+                curr.push_back(str);
+                helper(s,i+1,"",curr);
+                curr.pop_back();
             }
         }
     }
     vector<vector<string>> partition(string s) {
-        vector<string>vec;
-        helper(s,vec,0);
+        vector<string>curr;
+        helper(s,0,"",curr);
         return ans;
     }
 };
