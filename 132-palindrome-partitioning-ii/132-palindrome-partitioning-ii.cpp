@@ -1,9 +1,6 @@
 class Solution {
-public:
-    vector<int>dp;
-    bool pali(string &curr){
-        int i=0;
-        int j=curr.size()-1;
+private:
+    bool pali(string &curr,int i,int j){
         while(i<j){
             if(curr[i]!=curr[j]) return false;
             i++;
@@ -11,21 +8,19 @@ public:
         }
         return true;
     }
-    int helper(string &s,int idx){
-        if(idx==s.size()) return -1;
-        int ans=s.size();
-        string curr="";
-        if(dp[idx]!=-1) return dp[idx];
-        for(int i=idx;i<s.size();i++){
-            curr+=s[i];
-            if(pali(curr)){
-                ans=min(ans,1+helper(s,i+1));
+public:
+    int minCut(string s) {
+        int n=s.size();
+        vector<int>dp(n+1,INT_MAX);
+        dp[0]=-1;
+        for(int i=1;i<=n;i++){
+            for(int j=i-1;j>=0;j--){
+                if(dp[j]!=INT_MAX && pali(s,j,i-1)){
+                    dp[i]=min(dp[i],1+dp[j]);
+                }
             }
         }
-        return dp[idx]=ans;
-    }
-    int minCut(string s) {
-        dp.resize(s.size(),-1);
-        return helper(s,0);
+        return dp[n];
+        
     }
 };
