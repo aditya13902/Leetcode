@@ -1,29 +1,16 @@
 class Solution {
-    int _n;
-    vector<int>dp;
-    int dfs(int num){
-        if(num==1){
-            return 1;
-        }
-        if(dp[num]!=-1){
-            return dp[num];
-        }
-        int res=0;
-        if(num!=_n){
-            res=num;
-        }
-        for(int i=1;i<num;i++){
-            int val=dfs(num-i)*dfs(i);
-            res=max(res,val);
-        }
-        return dp[num]=res;
-    }
 public:
+    unordered_map<int,int>mp;
+    int helper(int n,int cnt){
+        if(n==0) return cnt>1;
+        int ans=0;
+        if(mp.find(n)!=mp.end()) return mp[n];
+        for(int i=1;i<=n;i++){
+            ans=max(ans,i*helper(n-i,cnt+1));
+        }
+        return mp[n]=ans;
+    }
     int integerBreak(int n) {
-        _n=n;
-        dp.resize(n+1,-1);
-        dp[1]=1;
-        return dfs(n);
-        
+        return helper(n,0);
     }
 };
