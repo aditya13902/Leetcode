@@ -1,34 +1,32 @@
 class Solution {
 public:
-    int cnt=0;
-    void merge(vector<int>&nums,int l,int m,int r){
-        // vector<int>tmp(r-l+1);
+    int merge(vector<int>&arr,int l,int m,int r){
         int i=l;
         int j=m+1;
-        // int k=0;
+        int ans=0;
         while(i<=m && j<=r){
-            if((long long)nums[i]>(long long ) 2* nums[j]){
-                // tmp[k++]=nums[j++];
-                cnt+=(m-i+1);
+            if((long long)arr[i]>(long long) 2*arr[j]){
+                ans+=(m-i+1);
                 j++;
             }
             else{
-                // tmp[k++]=nums[i++];
                 i++;
             }
         }
-        sort(nums.begin() + l, nums.begin() + r + 1);
+        sort(arr.begin()+l,arr.begin()+r+1);
+        return ans;
     }
-    void mergesort(vector<int>&nums,int l,int r){
-        if(l<r){
-            int m=l+(r-l)/2;
-            mergesort(nums,l,m);
-            mergesort(nums,m+1,r);
-            merge(nums,l,m,r);
+    int mergesort(vector<int>&arr,int i,int j){
+        int ans=0;
+        if(i<j){
+            int m=i+(j-i)/2;
+            ans+=mergesort(arr,i,m);
+            ans+=mergesort(arr,m+1,j);
+            ans+=merge(arr,i,m,j);
         }
+        return ans;
     }
     int reversePairs(vector<int>& nums) {
-        mergesort(nums,0,nums.size()-1);
-        return cnt;
+        return mergesort(nums,0,nums.size()-1);
     }
 };
