@@ -7,9 +7,8 @@ public:
         while(q.size()){
             auto [r,c]=q.front();
             q.pop();
-            if(r<0 || c<0 || r>=image.size() || c>=image[0].size() || image[r][c]!=curr || image[r][c]==color){
-                continue;
-            }
+            if(r<0 || c<0 || r>=image.size() || c>=image[0].size() || image[r][c]!=curr || image[r][c]==color) continue;
+            
             image[r][c]=color;
             q.push({r+1,c});
             q.push({r-1,c});
