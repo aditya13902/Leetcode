@@ -1,21 +1,18 @@
 class Solution {
 public:
-    int helper(string &s,int i,char prev){
-        if(i>=s.size()) return 0;
-        if(s[i]==prev){
-            char opp=(s[i]=='0')?'1':'0';
-            return 1+helper(s,i+1,opp);
-        }
-        else{
-            return helper(s,i+1,s[i]);
-        }
-    }
     int minOperations(string s) {
-        int ans=s.size();
-        ans=min(ans,helper(s,1,s[0]));
-        char opp=(s[0]=='0')?'1':'0';
-        ans=min(ans,1+helper(s,1,opp));
-        return ans;
+        int cnt1=0;// for 010101.... alternating sequence
+        int cnt2=0;// for 101010.... alternating sequence;
+        for(int i=0;i<s.size();i++){
+            if(i%2==0){
+                if(s[i]=='1') cnt1++;
+                else cnt2++;
+            }
+            else{
+                if(s[i]=='0') cnt1++;
+                else cnt2++;
+            }
+        }
+        return min(cnt1,cnt2);
     }
 };
-// 01111
