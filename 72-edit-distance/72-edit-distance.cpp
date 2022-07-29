@@ -1,23 +1,19 @@
 class Solution {
 public:
-    int minDistance(string text1, string text2) {
-        vector<vector<int>>dp(text1.size()+1,vector<int>(text2.size()+1,0));
-        for(int i=0;i<=text1.size();i++){
-            dp[i][0]=i;
+    vector<vector<int>>dp;
+    int helper(string& word1,string& word2,int i,int j){
+        if(i==word1.size() && j==word2.size()) return 0;
+        if(i==word1.size() || j==word2.size()) return i==word1.size()?word2.size()-j:word1.size()-i;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(word1[i]==word2[j]){
+            return dp[i][j]=helper(word1,word2,i+1,j+1);
         }
-        for(int j=0;j<=text2.size();j++){
-            dp[0][j]=j;
+        else{
+            return dp[i][j]=1+min({helper(word1,word2,i+1,j),helper(word1,word2,i,j+1),helper(word1,word2,i+1,j+1)});
         }
-        for(int i=1;i<=text1.size();i++){
-            for(int j=1;j<=text2.size();j++){
-                if(text1[i-1]==text2[j-1]){
-                    dp[i][j]=dp[i-1][j-1];
-                }
-                else{
-                    dp[i][j]=1+min(dp[i-1][j],min(dp[i][j-1],dp[i-1][j-1]));
-                }
-            }
-        }
-        return dp[text1.size()][text2.size()];
+    }
+    int minDistance(string word1, string word2) {
+        dp.resize(word1.size(),vector<int>(word2.size(),-1));
+        return helper(word1,word2,0,0);
     }
 };
