@@ -1,23 +1,20 @@
 class Solution {
 public:
-    int minInsertions(string s) {
-        vector<vector<int>>dp(s.size(),vector<int>(s.size(),0));
-        for(int i=0;i<s.size();i++) dp[i][i]=1;
-        for(int l=2;l<=s.size();l++){
-            for(int i=0;i<=s.size()-l;i++){
-                int j=i+l-1;
-                if(s[i]==s[j]){
-                    if(l==2) dp[i][j]=2;
-                    else{
-                        dp[i][j]=2+dp[i+1][j-1];
-                    }
+    int minInsertions(string text1) {
+        string text2=text1;
+        reverse(text2.begin(),text2.end());
+        vector<vector<int>>dp(text1.size()+1,vector<int>(text2.size()+1,0));
+        // dp[0][0]=1;
+        for(int i=1;i<=text1.size();i++){
+            for(int j=1;j<=text2.size();j++){
+                if(text1[i-1]==text2[j-1]){
+                    dp[i][j]=1+dp[i-1][j-1];
                 }
                 else{
-                    dp[i][j]=max(dp[i+1][j],dp[i][j-1]);
+                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
                 }
             }
         }
-        int n=s.size();
-        return s.size()-dp[0][n-1];
+        return text1.size()-dp[text1.size()][text2.size()];
     }
 };
