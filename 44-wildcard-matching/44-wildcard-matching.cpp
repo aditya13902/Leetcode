@@ -1,31 +1,24 @@
 class Solution {
 public:
     bool isMatch(string s, string p) {
-        int n=s.size();
-        int m=p.size();
-        vector<int>prev(m+1,0);
-        prev[0]=1;
-        for(int i=1;i<=m;i++){
-            if(p[i-1]=='*') prev[i]=prev[i-1];
-            else{
-                prev[i]=0;
-            }
+        
+        vector<vector<int>>dp(s.size()+1,vector<int>(p.size()+1,0));
+        
+        for(int i=1;i<=p.size();i++){
+            if(p[i-1]!='*') break;
+            dp[0][i]=1;
         }
-        for(int i=1;i<=n;i++){
-            vector<int>curr(m+1,0);
-            for(int j=1;j<=m;j++){
+        dp[0][0]=1;
+        for(int i=1;i<=s.size();i++){
+            for(int j=1;j<=p.size();j++){
                 if(s[i-1]==p[j-1] || p[j-1]=='?'){
-                    curr[j]=prev[j-1];
+                    dp[i][j]=dp[i-1][j-1];
                 }
                 else if(p[j-1]=='*'){
-                    curr[j]=prev[j] || curr[j-1];
-                }
-                else{
-                    curr[j]=0;
+                    dp[i][j]=dp[i][j-1]||dp[i-1][j];
                 }
             }
-            prev=curr;
         }
-        return prev[m];
+        return dp[s.size()][p.size()];
     }
 };
