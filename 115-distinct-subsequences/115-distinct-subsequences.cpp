@@ -1,18 +1,18 @@
 class Solution {
 public:
+    vector<vector<int>>dp;
+    int helper(string &s,string &t,int i,int j){
+        if(j==t.size()) return 1;
+        if(i==s.size()) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        int ans=helper(s,t,i+1,j);
+        if(s[i]==t[j]){
+            ans+=helper(s,t,i+1,j+1);
+        }
+        return dp[i][j]=ans;
+    }
     int numDistinct(string s, string t) {
-        vector<vector<unsigned int>>dp(s.size()+1,vector<unsigned int>(t.size()+1,0));
-        for(int i=0;i<=s.size();i++){
-            dp[i][0]=1;
-        }
-        for(int i=1;i<=s.size();i++){
-            for(int j=1;j<=t.size();j++){
-                dp[i][j]+=dp[i-1][j];
-                if(s[i-1]==t[j-1]){
-                    dp[i][j]+=dp[i-1][j-1];
-                }
-            }
-        }
-        return dp[s.size()][t.size()];
+        dp.resize(s.size(),vector<int>(t.size(),-1));
+        return helper(s,t,0,0);
     }
 };
