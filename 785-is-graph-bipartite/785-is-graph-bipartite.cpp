@@ -1,28 +1,22 @@
 class Solution {
 public:
-    vector<int>vis;
-    int f=1;
-    void dfs(vector<vector<int>>&adj,int v,int col){
-        if(vis[v]!=0){
-            if(vis[v]!=col){
-                f=0;
-            }
-            // f=0;
-            return;
+    vector<int>col;
+    bool dfs(vector<vector<int>>graph,int v,int color){
+        if(col[v]!=0) return col[v]==color;
+        col[v]=color;
+        for(auto ele:graph[v]){
+            if(!dfs(graph,ele,-color)) return false;
         }
-        vis[v]=col;
-        for(auto ele:adj[v]){
-            dfs(adj,ele,-col);
-        }
+        return true;
     }
-    bool isBipartite(vector<vector<int>>& adj) {
-        int n=adj.size();
-        vis.resize(n,0);
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n=graph.size();
+        col.resize(n,0);
         for(int i=0;i<n;i++){
-            if(vis[i]==0){
-                dfs(adj,i,1);
+            if(col[i]==0){
+                if(!dfs(graph,i,1)) return false;
             }
         }
-        return f;
+        return true;
     }
 };
