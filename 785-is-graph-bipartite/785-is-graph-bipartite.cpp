@@ -1,20 +1,26 @@
 class Solution {
 public:
-    vector<int>col;
-    bool dfs(vector<vector<int>>graph,int v,int color){
-        if(col[v]!=0) return col[v]==color;
-        col[v]=color;
-        for(auto ele:graph[v]){
-            if(!dfs(graph,ele,-color)) return false;
-        }
-        return true;
-    }
     bool isBipartite(vector<vector<int>>& graph) {
-        int n=graph.size();
-        col.resize(n,0);
-        for(int i=0;i<n;i++){
-            if(col[i]==0){
-                if(!dfs(graph,i,1)) return false;
+        vector<int>col(graph.size());
+        for(int i=0;i<graph.size();i++){
+            if(col[i]) continue;
+            queue<int>q;
+            q.push(i);
+            col[i]=1;
+            while(q.size()){
+                int l=q.size();
+                while(l--){
+                    int top=q.front();
+                    q.pop();
+                    for(auto ele:graph[top]){
+                        if(col[ele]!=0){
+                            if(col[ele]==col[top]) return false;
+                            continue;
+                        }
+                        col[ele]=-col[top];
+                        q.push(ele);
+                    }
+                }
             }
         }
         return true;
