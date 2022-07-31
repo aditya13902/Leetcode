@@ -1,39 +1,63 @@
 class NumArray {
 public:
-    vector<int>bit;
-    vector<int>vec;
     int n;
-    int sum(int i){
-        int ans=0;
-        for(;i>0;i-=(i&-i)){
-            ans+=bit[i];
+    vector<int>seg;
+    void build(int index,int low,int high,vector<int>&nums)
+    {
+        if(low==high)
+        {
+            seg[index]=nums[low];
+            return;
         }
-        // cout<<ans<<endl;
-        return ans;
+        int mid=(low+high)/2;
+        build(2*index+1,low,mid,nums);
+        build(2*index+2,mid+1,high,nums);
+        seg[index]=seg[2*index+1]+seg[2*index+2];
     }
-    void add(int i,int val){
-        for(;i<=n;i+=(i&-i)){
-            bit[i]+=val;
+    int query(int index,int low,int high,int l,int r)
+    {
+        if(low>=l && high<=r)
+        {
+            return seg[index];
         }
+        if(high<l || low>r)
+            return 0;
+        int mid=(low+high)/2;
+        int left=query(2*index+1,low,mid,l,r);
+        int right=query(2*index+2,mid+1,high,l,r);
+        return left+right;
+    }
+    void up(int index,int low,int high,int value,int idx)
+    {
+        if(low>idx || high<idx){
+            return;
+        }
+        if(low==high)
+        {
+            if(low==idx){
+                seg[index]=value;
+            }
+            return;
+        }
+        int mid=(low+high)/2;
+        up(2*index+1,low,mid,value,idx);
+        up(2*index+2,mid+1,high,value,idx);
+        seg[index]=seg[2*index+1]+seg[2*index+2];
     }
     NumArray(vector<int>& nums) {
         n=nums.size();
-        vec=nums;
-        bit.resize(n+1,0);
-        for(int i=1;i<=n;i++){
-            add(i,nums[i-1]);
-        }
+        if(n==0)
+            return ;
+        seg.resize(4*n,0);
+        build(0,0,n-1,nums);
     }
     
     void update(int index, int val) {
-        int x=val-vec[index];
-        // cout<<x<<endl;
-        add(index+1,x);
-        vec[index]=val;
+        up(0,0,n-1,val,index);
     }
     
-    int sumRange(int left, int right) {
-        return sum(right+1)-sum(left);
+    int sumRange(int i, int j) {
+        return query(0,0,n-1,i,j);
     }
 };
 
