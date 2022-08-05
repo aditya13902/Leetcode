@@ -1,24 +1,36 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int i=0;
-        int j=nums.size()-1;
-        while(i<=j){
-            int m=i+(j-i)/2;
+        int l=0;
+        int r=nums.size()-1;
+        while(l<=r){
+            int m=l+(r-l)/2;
             if(nums[m]==target) return m;
-            else if(nums[m]>=nums[i]){
-                if(target>nums[m] || target<nums[i]){
-                    i=m+1;
+            if(nums[m]>=nums[0]){
+                if(nums[m]<target){
+                    l=m+1;
                 }
                 else{
-                    j=m-1;
+                    if(target>=nums[0]){
+                        r=m-1;
+                    }
+                    else{
+                        l=m+1;
+                    }
                 }
             }
             else{
-                if(nums[m]>target || target>=nums[i]){
-                    j=m-1;
+                if(nums[m]<target){
+                    if(target>=nums[0]){
+                        r=m-1;
+                    }
+                    else{
+                        l=m+1;
+                    }
                 }
-                else i=m+1;
+                else{
+                    r=m-1;
+                }
             }
         }
         return -1;
