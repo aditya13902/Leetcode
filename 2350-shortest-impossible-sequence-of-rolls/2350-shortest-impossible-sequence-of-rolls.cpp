@@ -2,14 +2,14 @@ class Solution {
 public:
     int shortestSequence(vector<int>& rolls, int k) {
         unordered_set<int>st;
-        int len=0;
+        int cnt=0;
         for(auto ele:rolls){
             st.insert(ele);
             if(st.size()==k){
-                len++;
+                cnt++;
                 st.clear();
             }
         }
-        return len+1;
+        return cnt+1;
     }
 };
