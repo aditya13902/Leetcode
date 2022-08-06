@@ -1,27 +1,16 @@
 class Solution {
 public:
     int minFlipsMonoIncr(string s) {
-        int zero=0;
-        int one=0;
-        vector<int>lft(s.size(),0);
-        vector<int>rgt(s.size(),0);
-        for(int i=0;i<s.size();i++){
-            lft[i]=one;
-            if(s[i]=='1'){
-                one++;
-            }
-            
+        int cnt0=0;
+        int cnt1=0;
+        for(auto ch:s){
+            if(ch=='0') cnt0++;
         }
-        for(int i=s.size()-1;i>=0;i--){
-            rgt[i]=zero;
-            if(s[i]=='0'){
-                zero++;
-            }
-            
-        }
-        int ans=INT_MAX;
+        int ans=cnt0;
         for(int i=0;i<s.size();i++){
-            ans=min(ans,lft[i]+rgt[i]);
+            cnt0-=(s[i]=='0');
+            cnt1+=(s[i]=='1');
+            ans=min(ans,cnt1+cnt0);
         }
         return ans;
     }
