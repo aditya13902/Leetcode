@@ -10,35 +10,26 @@
  */
 class Solution {
 public:
-    ListNode* rev(ListNode* ptr,int cnt){
-        auto curr=ptr;
-        ListNode* prev=NULL;
-        while(curr && cnt){
-            auto nxt=curr->next;
-            curr->next=prev;
-            prev=curr;
-            curr=nxt;
-            cnt--;
-        }
-        return prev;
-        
+    ListNode* rev(ListNode* head){
+        if(!head ||!head->next) return head;
+        auto nxt=rev(head->next);
+        head->next->next=head;
+        head->next=nullptr;
+        return nxt;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(head==NULL){
-            return NULL;
-        }
-        auto curr=head;
-        ListNode* prev=NULL;
         int cnt=0;
-        while(curr!=NULL && cnt!=k){
-            prev=curr;
-            curr=curr->next;
+        auto ptr=head;
+        ListNode* prev=NULL;
+        while(ptr && cnt!=k){
+            prev=ptr;
+            ptr=ptr->next;
             cnt++;
         }
         if(cnt!=k) return head;
-        
-        auto new_head=rev(head,k);
-        head->next=reverseKGroup(curr,k);
-        return new_head;
+        prev->next=nullptr;
+        auto node=rev(head);
+        head->next=reverseKGroup(ptr,k);
+        return node;
     }
 };
