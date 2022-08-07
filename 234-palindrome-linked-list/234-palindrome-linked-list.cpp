@@ -11,38 +11,31 @@
 class Solution {
 public:
     ListNode* rev(ListNode* node){
-        if(!node || !node->next){
-            return node;
-        }
-        ListNode* tmp=rev(node->next);
+        if(!node || !node->next) return node;
+        auto nxt=rev(node->next);
         node->next->next=node;
         node->next=NULL;
-        return tmp;
+        return nxt;
     }
     bool isPalindrome(ListNode* head) {
         ListNode* dummy=new ListNode(-1);
         dummy->next=head;
-        ListNode* walker=dummy;
         ListNode* runner=dummy;
+        ListNode* walker=dummy;
         while(runner && runner->next){
             runner=runner->next->next;
             walker=walker->next;
         }
         walker->next=rev(walker->next);
-        ListNode* ptr1=dummy->next;
-        ListNode*ptr2=walker->next;
-        // cout<<ptr1->val<<" "<<ptr1->val<<endl;
+        auto ptr1=dummy->next;
+        auto ptr2=walker->next;
         while(ptr2){
-            if(ptr1->val!=ptr2->val){
-                return false;
-            }
+            // cout<<ptr1->val<< "-"<<ptr2->val<<endl;
+            if(ptr2->val!=ptr1->val) return false;
             ptr1=ptr1->next;
             ptr2=ptr2->next;
         }
         return true;
-        
     }
 };
- //              r
- // -1 1 2 3 2 1
- //        w
+// 1 2 3 4 5
