@@ -11,26 +11,13 @@
  */
 class Solution {
 public:
-    TreeNode* helper(TreeNode* root){
-        if(!root){
-            return root;
-        }
-        TreeNode* lft=helper(root->left);
-        TreeNode* rgt=helper(root->right);
-        root->left=NULL;
-        if(lft==NULL){
-            root->right=rgt;
-            return root;
-        }
-        auto ptr=lft;
-        while(ptr->right!=nullptr){
-            ptr=ptr->right;
-        }
-        ptr->right=rgt;
-        root->right=lft;
-        return root;
-    }
+    TreeNode* prev=NULL;
     void flatten(TreeNode* root) {
-        helper(root);
+        if(!root) return;
+        flatten(root->right);
+        flatten(root->left);
+        root->right=prev;
+        root->left=NULL;
+        prev=root;
     }
 };
