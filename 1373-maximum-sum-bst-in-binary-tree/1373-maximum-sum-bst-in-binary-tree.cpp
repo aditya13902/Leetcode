@@ -9,34 +9,19 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class bst{
-public:
-    int sum;
-    int mn;
-    int mx;
-    bst(int sum,int mn,int mx){
-        this->sum=sum;
-        this->mn=mn;
-        this->mx=mx;
-    }
-    
-};
 class Solution {
-private:
-    int ans=0;
-    bst* helper(TreeNode* root){
-        if(!root){
-            return new bst(0,INT_MAX,INT_MIN);
-        }
-        bst* l=helper(root->left);
-        bst* r=helper(root->right);
-        if(root->val>l->mx && root->val<r->mn){
-            ans=max(ans,root->val+l->sum+r->sum);
-            return new bst(root->val+l->sum+r->sum,min(root->val,l->mn),max(root->val,r->mx));
-        }
-        return new bst(max(l->sum,r->sum),INT_MIN,INT_MAX);
-    }
 public:
+    int ans=0;
+    vector<int> helper(TreeNode* root){ // {max,min,sum}
+        if(!root) return {INT_MIN,INT_MAX,0};
+        auto l=helper(root->left);
+        auto r=helper(root->right);
+        if(root->val>l[0] && root->val<r[1]){
+            ans=max(ans,root->val+r[2]+l[2]);
+            return {max(r[0],root->val),min(root->val,l[1]),root->val+r[2]+l[2]};
+        }
+        return {INT_MAX,INT_MIN,0};
+    }
     int maxSumBST(TreeNode* root) {
         helper(root);
         return ans;
