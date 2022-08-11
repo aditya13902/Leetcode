@@ -12,20 +12,15 @@
 class Solution {
 public:
     pair<int,int> helper(TreeNode* root){
-        if(root==nullptr){
-            return {0,1};
-        }
+        if(!root) return {0,1};
         auto l=helper(root->left);
         auto r=helper(root->right);
-        int lh=l.first;
-        int rh=r.first;
-        if(abs(lh-rh)<=1 && l.second && r.second){
-            return {max(lh,rh)+1,1};
-        }
-        return {max(lh,rh)+1,0};
+        // {h,flag}
+        if(abs(l.first-r.first)<=1 && l.second && r.second) return {1+max(l.first,r.first),1};
+        return {1+max(l.first,r.first),0};
     }
     bool isBalanced(TreeNode* root) {
-        auto p=helper(root);
-        return p.second;
+        auto ans=helper(root);
+        return ans.second;
     }
 };
