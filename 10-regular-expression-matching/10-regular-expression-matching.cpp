@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int dp[21][31];
-    bool memo(string &s,string &t,int i,int j){
-        if(i>=s.size() && j>=t.size()) return true;
-        if(j>=t.size()) return false;
-        
-        if(dp[i][j]!=-1){
-             return dp[i][j];
+    vector<vector<int>>dp;
+    bool helper(string &s,string &p,int i,int j){
+        if(j==p.size() && i==s.size()) return true;
+        if(j==p.size()) return false;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(j+1<p.size() && p[j+1]=='*'){
+            bool ans=false;
+            if(i<s.size() && (s[i]==p[j] || p[j]=='.')){
+                ans=ans || helper(s,p,i+1,j);
+            }
+            ans=ans || helper(s,p,i,j+2);
+            return dp[i][j]=ans;
         }
-        bool flag=(i<s.size() && ( s[i]==t[j] || t[j]=='.' ));
-        if(j+1<t.size() && t[j+1]=='*'){
-            return dp[i][j]= memo(s,t,i,j+2) || (flag && i<s.size() && memo(s,t,i+1,j));
+        else if(i<s.size()  && (s[i]==p[j] || p[j]=='.')){
+            return dp[i][j]=helper(s,p,i+1,j+1);
         }
-        else if(flag){
-            return dp[i][j]=memo(s,t,i+1,j+1);
+        else {
+            return dp[i][j]=false;
         }
-        return dp[i][j]=false;
     }
     bool isMatch(string s, string p) {
-        for(int i=0;i<=20;i++){
-            for(int j=0;j<=30;j++){
-                dp[i][j]=-1;
-            }
-        }
-        return memo(s,p,0,0);
+        dp.resize(s.size()+1,vector<int>(p.size()+1,-1));
+        return helper(s,p,0,0);
     }
 };
