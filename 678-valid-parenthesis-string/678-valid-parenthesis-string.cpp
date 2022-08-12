@@ -1,24 +1,34 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        int currmx=0;
-        int currmn=0;
-        for(int i=0;i<s.size();i++){
+        int open=0;
+        int close=0;
+        int cnt=0;
+        int n=s.size();
+        for(int i=0;i<n;i++){
             if(s[i]=='('){
-                currmn++;
-                currmx++;
+                open++;
             }
             else if(s[i]==')'){
-                currmn--;
-                currmx--;
+                close++;
             }
             else{
-                currmx++;
-                currmn--;
+                cnt++;
             }
-            if(currmx<0) return false;
-            currmn=max(0,currmn);
+            
+            if(open+cnt-close<0) return false;
+            
         }
-        return currmn==0;
+        open=0;
+        close=0;
+        cnt=0;
+        for(int i=n-1;i>=0;i--){
+            if(s[i]==')') close++;
+            else if(s[i]=='(') open++;
+            else cnt++;
+            
+            if(close+cnt-open<0) return false;
+        }
+        return true;
     }
 };
