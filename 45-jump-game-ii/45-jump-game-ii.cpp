@@ -1,17 +1,16 @@
 class Solution {
 public:
-    int jump(vector<int>& nums) {
-        int n=nums.size();
-        vector<int>dp(n,INT_MAX);
-        dp[n-1]=0;
-        for(int i=n-2;i>=0;i--){
-            for(int j=1;j<=nums[i] && i+j<n;j++){
-                if(dp[i+j]!=INT_MAX){
-                    dp[i]=min(dp[i+j]+1,dp[i]);
-                }
-                
-            }
+    unordered_map<int,int>mp;
+    int helper(vector<int>&nums,int i){
+        if(i>=nums.size()-1) return 0;
+        if(mp.find(i)!=mp.end()) return mp[i];
+        int ans=1e8;
+        for(int j=i+1;j<=i+nums[i];j++){
+            ans=min(ans,1+helper(nums,j));
         }
-        return dp[0];
+        return mp[i]=ans;
+    }
+    int jump(vector<int>& nums) {
+        return helper(nums,0)!=1e8?helper(nums,0):-1;
     }
 };
