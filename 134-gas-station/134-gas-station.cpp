@@ -8,11 +8,12 @@ public:
         int strt=0;
         int curr=0;
         for(int i=0;i<gas.size();i++){
-            curr+=(gas[i]-cost[i]);
             if(curr<0){
-                strt=i+1;
+                strt=i;
                 curr=0;
             }
+            curr+=(gas[i]-cost[i]);
+            
         }
         return strt;
     }
