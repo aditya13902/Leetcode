@@ -7,7 +7,7 @@ public:
         vector<vector<int>>ans;
         for(int i=1;i<intervals.size();i++){
             if(intervals[i][0]<=e){
-                e=max(intervals[i][1],e);
+                e=max(e,intervals[i][1]);
             }
             else{
                 ans.push_back({s,e});
