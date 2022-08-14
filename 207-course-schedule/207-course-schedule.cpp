@@ -1,40 +1,28 @@
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>>adj(numCourses);
-        vector<int>indeg(numCourses,0);
-        for(auto vec:prerequisites){
-            adj[vec[1]].push_back(vec[0]);
-            indeg[vec[0]]++;
+    vector<int>vis;
+    bool dfs(vector<vector<int>>&adj,int v,unordered_set<int>&st){
+        if(st.find(v)!=st.end()) return false;
+        if(vis[v]) return true;
+        st.insert(v);
+        vis[v]=1;
+        for(auto ele:adj[v]){
+            if(!dfs(adj,ele,st)) return false;
         }
-        queue<int>q;
-        int f=0;
-        for(int i=0;i<numCourses;i++){
-            if(indeg[i]==0){
-                f=1;
-                q.push(i);
-            }
+        st.erase(v);
+        return true;
+    }
+    bool canFinish(int n, vector<vector<int>>& prereq) {
+        vis.resize(n,0);
+        vector<vector<int>>adj(n);
+        for(auto vec:prereq){
+            adj[vec[0]].push_back(vec[1]);
         }
-        if(!f){
-            return false;
-        }
-        while(q.size()){
-            int l=q.size();
-            while(l--){
-                auto curr=q.front();
-                q.pop();
-                for(auto ele:adj[curr]){
-                    indeg[ele]--;
-                    if(indeg[ele]==0){
-                        q.push(ele);
-                    }
-                }
-            }
-        }
-        for(auto ele:indeg){
-            if(ele!=0){
-                return false;
-            }
+        for(int i=0;i<n;i++){
+            if(vis[i]) continue;
+            unordered_set<int>st;
+            int flag=dfs(adj,i,st);
+            if(!flag) return false;
         }
         return true;
     }
