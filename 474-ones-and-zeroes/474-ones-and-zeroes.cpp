@@ -12,7 +12,6 @@ public:
         return dp[m][n][i]=ans;
     }
     int findMaxForm(vector<string>& strs, int m, int n) {
-        dp.resize(m+1,vector<vector<int>>(n+1,vector<int>(strs.size(),-1)));
         vector<pair<int,int>>vec;
         for(auto str:strs){
             int cnt0=0;
@@ -23,6 +22,7 @@ public:
             }
             vec.push_back({cnt0,cnt1});
         }
+        dp.resize(m+1,vector<vector<int>>(n+1,vector<int>(vec.size(),-1)));
         return helper(vec,m,n,0);
     }
 };
