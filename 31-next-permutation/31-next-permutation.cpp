@@ -10,15 +10,16 @@ public:
         }
         if(idx==-1){
             reverse(nums.begin(),nums.end());
+            return;
         }
-        else{
-            for(int i=nums.size()-1;i>idx;i--){
-                if(nums[i]>nums[idx]){
-                    swap(nums[i],nums[idx]);
-                    reverse(nums.begin()+idx+1,nums.end());
-                    return;
-                }
+        for(int i=nums.size()-1;i>idx;i--){
+            if(nums[i]>nums[idx]){
+                swap(nums[i],nums[idx]);
+                reverse(nums.begin()+idx+1,nums.end());
+                return;
             }
         }
+        
+        
     }
 };
