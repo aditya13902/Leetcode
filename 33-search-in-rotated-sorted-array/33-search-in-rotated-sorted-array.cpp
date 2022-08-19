@@ -6,8 +6,8 @@ public:
         while(l<=r){
             int m=l+(r-l)/2;
             if(nums[m]==target) return m;
-            if(nums[m]>=nums[0]){
-                if(nums[m]<target){
+            else if(nums[m]>=nums[0]){
+                if(target>nums[m]){
                     l=m+1;
                 }
                 else{
@@ -20,16 +20,16 @@ public:
                 }
             }
             else{
-                if(nums[m]<target){
+                if(target<nums[m]){
+                    r=m-1;
+                }
+                else{
                     if(target>=nums[0]){
                         r=m-1;
                     }
                     else{
                         l=m+1;
                     }
-                }
-                else{
-                    r=m-1;
                 }
             }
         }
