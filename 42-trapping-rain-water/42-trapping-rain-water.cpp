@@ -2,31 +2,39 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n=height.size();
-        int mxleft=height[0];
-        int mxright=height[n-1];
+        vector<int>left(n);
+        vector<int>right(n);
         
-        int l=1;
-        int r=n-2;
-        int ans=0;
-        while(l<=r){
-            if(mxleft<mxright){
-                if(mxleft<height[l]){
-                    mxleft=height[l];
-                }
-                else{
-                    ans+=mxleft-height[l];
-                }
-                l++;
+        stack<int>st;
+        for(int i=0;i<n;i++){
+            while(st.size() && st.top()<=height[i]){
+                st.pop();
+            }
+            if(st.size()){
+                left[i]=st.top();
             }
             else{
-                if(mxright<height[r]){
-                    mxright=height[r];
-                }
-                else{
-                    ans+=mxright-height[r];
-                }
-                r--;
+                left[i]=height[i];
+                st.push(height[i]);
             }
+        }
+        while(st.size()) st.pop();
+        
+        for(int i=n-1;i>=0;i--){
+            while(st.size() && st.top()<=height[i]){
+                st.pop();
+            }
+            if(st.size()) {
+                right[i]=st.top();
+            }
+            else{
+                right[i]=height[i];
+                st.push(height[i]);
+            }
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            ans+=(min(left[i],right[i])-height[i]);
         }
         return ans;
     }
