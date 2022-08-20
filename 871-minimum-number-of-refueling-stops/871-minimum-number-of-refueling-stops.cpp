@@ -5,9 +5,8 @@ public:
         int curr=startFuel;
         int cnt=0;
         int i=0;
-        int n=stations.size();
         while(curr<target){
-            while(i<n && curr>=stations[i][0]){
+            while(i<stations.size() && stations[i][0]<=curr){
                 pq.push(stations[i][1]);
                 i++;
             }
