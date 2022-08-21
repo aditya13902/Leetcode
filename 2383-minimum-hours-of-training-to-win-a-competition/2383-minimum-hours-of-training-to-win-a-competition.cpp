@@ -10,8 +10,7 @@ public:
             mx=max(mx,(ele+1)-initialExperience);
             initialExperience+=ele;
         }
-        // if(mx>0) mx++;
-        // cout<<sum_energy<<endl;
+
         return max(0,sum_energy-initialEnergy)+mx;
     }
 };
