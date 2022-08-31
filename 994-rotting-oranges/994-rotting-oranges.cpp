@@ -1,7 +1,15 @@
 class Solution {
 public:
+    bool issafe(vector<vector<int>>&grid,int x,int y){
+        if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size()){
+            return false;
+        }
+        if(grid[x][y]==1) return true;
+        return false;
+        
+    }
     int orangesRotting(vector<vector<int>>& grid) {
-        int time=0;
+        int t=0;
         queue<vector<int>>q;
         for(int i=0;i<grid.size();i++){
             for(int j=0;j<grid[0].size();j++){
@@ -18,21 +26,29 @@ public:
                 q.pop();
                 int x=curr[0];
                 int y=curr[1];
-                if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size()){
-                    continue;
+                // grid[x][y]=2;
+                if(issafe(grid,x+1,y)){
+                    q.push({x+1,y});
+                    grid[x+1][y]=2;
                 }
-                if(grid[x][y]==-1 || grid[x][y]==0){
-                    continue;
+                if(issafe(grid,x-1,y)){
+                    q.push({x-1,y});
+                    grid[x-1][y]=2;
                 }
-                grid[x][y]=-1;
-                q.push({x+1,y});
-                q.push({x-1,y});
-                q.push({x,y+1});
-                q.push({x,y-1});
+                if(issafe(grid,x,y+1)){
+                    q.push({x,y+1});
+                    grid[x][y+1]=2;
+                }
+                if(issafe(grid,x,y-1)){
+                    q.push({x,y-1});
+                    grid[x][y-1]=2;
+                }
             }
             if(q.size()){
-                time++;
+                // cout<<q.size()<<endl;
+                t++;
             }
+            
         }
         for(int i=0;i<grid.size();i++){
             for(int j=0;j<grid[0].size();j++){
@@ -42,6 +58,10 @@ public:
                 }
             }
         }
-        return time==0?0:time-1;
+        return t;
     }
 };
+// [[2,2]
+// ,[1,1]
+// ,[0,0]
+// ,[2,0]]
