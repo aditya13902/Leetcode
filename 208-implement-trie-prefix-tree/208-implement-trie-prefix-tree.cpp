@@ -1,60 +1,45 @@
 class Node{
-private:
-    Node* links[26];
-    bool flag=false;
 public:
-    bool check(char ch){
-        return links[ch-'a']!=NULL;
-    }
-    void set(char ch,Node* node){
-        links[ch-'a']=node;
-    }
-    Node* get(char ch){
-        return links[ch-'a'];
-    }
-    void setend(){
-        flag=true;
-    }
-    bool checkend(){
-        return flag;
-    }
+    Node* links[26];
+    bool end=false;
+
+    
 };
 class Trie {
+private:
     Node* root;
 public:
+    
     Trie() {
         root=new Node();
     }
     
     void insert(string word) {
         Node* curr=root;
-        for(int i=0;i<word.size();i++){
-            if(!curr->check(word[i])){
-                curr->set(word[i],new Node());
+        for(auto ch:word){
+            if(curr->links[ch-'a']==NULL){
+                curr->links[ch-'a']=new Node();
             }
-            curr=curr->get(word[i]);
+            curr=curr->links[ch-'a'];
         }
-        curr->setend();
+        curr->end=true;
     }
     
     bool search(string word) {
         Node* curr=root;
-        for(int i=0;i<word.size();i++){
-            if(!curr->check(word[i])){
-                return false;
-            }
-            curr=curr->get(word[i]);
+        for(auto ch:word){
+            if(curr->links[ch-'a']==NULL) return false;
+            curr=curr->links[ch-'a'];
         }
-        return curr->checkend();
+        // cout<<curr->end<<endl;
+        return curr->end;
     }
     
-    bool startsWith(string prefix) {
+    bool startsWith(string word) {
         Node* curr=root;
-        for(int i=0;i<prefix.size();i++){
-            if(!curr->check(prefix[i])){
-                return false;
-            }
-            curr=curr->get(prefix[i]);
+        for(auto ch:word){
+            if(curr->links[ch-'a']==NULL) return false;
+            curr=curr->links[ch-'a'];
         }
         return true;
     }
