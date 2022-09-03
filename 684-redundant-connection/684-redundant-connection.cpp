@@ -27,6 +27,6 @@ public:
                 return {u,v};
             }
         }
-        return {};
+        return {-1,-1};
     }
 };
