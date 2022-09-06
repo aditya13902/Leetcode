@@ -5,6 +5,7 @@ public:
         for(auto ele:piles){
             cnt+=(ele/m);
             if(ele%m) cnt++;
+            if(cnt>h) return false;
         }
         return cnt<=h;
     }
