@@ -9,26 +9,29 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-#define ull unsigned long long
 class Solution {
 public:
-    map<ull,vector<ull>>mp;
-    void helper(TreeNode* root,ull h,ull d){
-        if(!root){
-            return;
-        }
-        mp[h].push_back(d);
-        helper(root->left,h+1,2*d+1);
-        helper(root->right,h+1,2*d+2);
-        
-    }
     int widthOfBinaryTree(TreeNode* root) {
-        helper(root,0,0);
-        ull ans=0;
-        for(auto ele:mp){
-            auto vec=ele.second;
-            sort(vec.begin(),vec.end());
-            ans=max(ans,vec[vec.size()-1]-vec[0]+1);
+        queue<pair<TreeNode*,int>>q;
+        q.push({root,0});
+        int ans=0;
+        while(q.size()){
+            int mn=INT_MAX;
+            int mx=INT_MIN;
+            int l=q.size();
+            while(l--){
+                auto [curr,v]=q.front();
+                q.pop();
+                mn=min(mn,v);
+                mx=max(mx,v);
+                if(curr->left){
+                    q.push({curr->left,(long long)2*v+1});
+                }
+                if(curr->right){
+                    q.push({curr->right,(long long)2*v+2});
+                }
+            }
+            ans=max(ans,mx-mn+1);
         }
         return ans;
     }
