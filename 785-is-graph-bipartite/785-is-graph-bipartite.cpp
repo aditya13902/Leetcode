@@ -4,7 +4,6 @@ public:
     bool bfs(vector<vector<int>>&graph,int v){
         queue<pair<int,int>>q;
         q.push({v,0});
-        col[v]=0;
         while(q.size()){
             int l=q.size();
             while(l--){
@@ -12,12 +11,12 @@ public:
                 int node=curr.first;
                 int val=curr.second;
                 q.pop();
+                if(col[node]!=-1){
+                    if(col[node]!=val) return false;
+                    continue;
+                }
+                col[node]=val;
                 for(auto ele:graph[node]){
-                    if(col[ele]!=-1){
-                        if(col[ele]==val) return false;
-                        continue;
-                    }
-                    col[ele]=!val;
                     q.push({ele,!val});
                 }
             }
