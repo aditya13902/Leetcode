@@ -13,7 +13,7 @@ public:
     }
     int numWays(int steps, int arrLen) {
         this->arrLen=arrLen;
-        dp.resize(steps+1,vector<int>(1000,-1));
+        dp.resize(1000,vector<int>(1000,-1));
         return memo(steps,0);
     }
 };
