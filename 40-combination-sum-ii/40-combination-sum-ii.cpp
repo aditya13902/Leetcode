@@ -1,24 +1,27 @@
 class Solution {
 public:
     vector<vector<int>>ans;
-    void helper(vector<int>&nums,int idx,int sum,int target,vector<int>&subans){
-        if(sum==target){
-            ans.push_back(subans);
+    void helper(vector<int>&candidates,int i,int target,int sum,vector<int>&vec){
+        if(target==sum){
+            ans.push_back(vec);
             return;
         }
-        if(sum>target || idx>=nums.size()) return;
-        
-        subans.push_back(nums[idx]);
-        helper(nums,idx+1,sum+nums[idx],target,subans);
-        subans.pop_back();
-        int i=idx;
-        while(i<nums.size() && nums[i]==nums[idx]) i++;
-        helper(nums,i,sum,target,subans);
+        if(i==candidates.size() || sum>target){
+            return;
+        }
+        int j=i+1;
+        while(j<candidates.size() && candidates[j]==candidates[i]){
+            j++;
+        }
+        helper(candidates,j,target,sum,vec);
+        vec.push_back(candidates[i]);
+        helper(candidates,i+1,target,sum+candidates[i],vec);
+        vec.pop_back();
     }
-    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
-        sort(nums.begin(),nums.end());
-        vector<int>subans;
-        helper(nums,0,0,target,subans);
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
+        vector<int>vec;
+        helper(candidates,0,target,0,vec);
         return ans;
     }
 };
