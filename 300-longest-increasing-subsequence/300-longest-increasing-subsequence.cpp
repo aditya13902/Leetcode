@@ -1,29 +1,17 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int n=nums.size();
-        vector<int>dp(n,1);
-        vector<int>hash(n,0);
-        int mx=1;
-        int lstidx=0;
-        for(int i=1;i<n;i++){
-            hash[i]=i;
-            for(int j=i-1;j>=0;j--){
-                if(nums[j]<nums[i] && dp[i]<1+dp[j]){
-                    hash[i]=j;
-                    dp[i]=1+dp[j];
-                }
+        vector<int>tmp;
+        tmp.push_back(nums[0]);
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]>tmp.back()){
+                tmp.push_back(nums[i]);
             }
-            if(mx<dp[i]){
-                mx=dp[i];
-                lstidx=i;
+            else{
+                int idx=lower_bound(tmp.begin(),tmp.end(),nums[i])-tmp.begin();
+                tmp[idx]=nums[i];
             }
         }
-        // while(hash[lstidx]!=lstidx){
-        //     cout<<nums[lstidx]<<" ";
-        //     lstidx=hash[lstidx];
-        // }
-        // cout<<endl;
-        return mx;
+        return tmp.size();
     }
 };
