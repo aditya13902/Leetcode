@@ -1,36 +1,27 @@
 class Solution {
-    bool dfs(vector<vector<char>>&board,string word,int i,int j, map<pair<int,int>,int>&mp,int idx=0){
-        if(idx==word.size()){
-            return true;
-        }
-        if(i<0 || i>=board.size() || j<0 || j>=board[0].size() || mp[{i,j}]==1){
-            return false;
-        }
-        if(board[i][j]==word[idx]){
-            mp[{i,j}]=1;
-            bool dir1=dfs(board,word,i+1,j,mp,idx+1);
-            bool dir2=dfs(board,word,i,j+1,mp,idx+1);
-            bool dir3=dfs(board,word,i-1,j,mp,idx+1);
-            bool dir4=dfs(board,word,i,j-1,mp,idx+1);
-            mp[{i,j}]=0;
-            return dir1||dir2||dir3||dir4;
-        }
-        else{
-            return false;
-        }
-        
-    }
 public:
-    
+    vector<vector<int>>vis;
+    int r;
+    int c;
+    bool find(vector<vector<char>>& board,int i,int j,string &word,int idx){
+        if(idx==word.size()) return true;
+        if(i<0 || j<0 || i>=r || j>=c || vis[i][j] || word[idx]!=board[i][j]) return false;
+        vis[i][j]=1;
+        bool op1=find(board,i+1,j,word,idx+1);
+        bool op2=find(board,i-1,j,word,idx+1);
+        bool op3=find(board,i,j+1,word,idx+1);
+        bool op4=find(board,i,j-1,word,idx+1);
+        vis[i][j]=0;
+        return op1||op2||op3||op4;
+    }
     bool exist(vector<vector<char>>& board, string word) {
-        for(int i=0;i<board.size();i++){
-            for(int j=0;j<board[0].size();j++){
+        r=board.size();
+        c=board[0].size();
+        vis.resize(r,vector<int>(c,0));
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
                 if(board[i][j]==word[0]){
-                    map<pair<int,int>,int>mp;
-                    if(dfs(board,word,i,j,mp)){
-                        cout<<i<<","<<j<<endl;
-                        return true;
-                    }
+                    if(find(board,i,j,word,0)) return true;
                 }
             }
         }
