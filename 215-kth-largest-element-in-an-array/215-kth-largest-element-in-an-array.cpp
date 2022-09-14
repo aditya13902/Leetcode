@@ -3,8 +3,9 @@ public:
     int helper(vector<int>&nums,int l,int r,int k){
         if(l>r) return -1;
         int idx=l;
-        for(int i=l;i<=r;i++){
-            if(nums[i]<nums[r]){
+        int pivot=nums[r];
+        for(int i=l;i<r;i++){
+            if(nums[i]<=pivot){
                 swap(nums[idx],nums[i]);
                 idx++;
             }
