@@ -12,29 +12,18 @@
 class Solution {
 public:
     int ans=0;
-    bool check(unordered_map<int,int>&mp){
-        int siz=mp.size();
-        int cnt=0;
-        for(auto it:mp){
-            if(it.second&1){
-                cnt++;
-            }
-        }
-        return cnt<=1;
-    }
-    void helper(TreeNode* root,unordered_map<int,int>&mp){
+    void helper(TreeNode* root,int bit){
         if(!root) return;
-        mp[root->val]++;
-        if(!root->left && !root->right){
-            if(check(mp)) ans++;
+        bit^=(1<<root->val);
+        if(root->left==nullptr && root->right==nullptr){
+            if(__builtin_popcount(bit)<=1) ans++;
         }
-        helper(root->left,mp);
-        helper(root->right,mp);
-        mp[root->val]--;
+        helper(root->left,bit);
+        helper(root->right,bit);
     }
     int pseudoPalindromicPaths (TreeNode* root) {
         unordered_map<int,int>mp;
-        helper(root,mp);
+        helper(root,0);
         return ans;
     }
 };
