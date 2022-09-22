@@ -1,21 +1,14 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        string str="";
-        string curr="";
-        for(auto ch:s){
-            if(ch==' '){
-                reverse(curr.begin(),curr.end());
-                str+=curr;
-                str+=' ';
-                curr="";
-            }
-            else{
-                curr+=ch;
+        int i=0;
+        for(int j=0;j<s.size();j++){
+            if(s[j]==' '){
+                reverse(s.begin()+i,s.begin()+j);
+                i=j+1;
             }
         }
-        reverse(curr.begin(),curr.end());
-        str+=curr;
-        return str;
+        reverse(s.begin()+i,s.end());
+        return s;
     }
 };
