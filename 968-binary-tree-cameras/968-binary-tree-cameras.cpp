@@ -11,30 +11,32 @@
  */
 class Solution {
 public:
-    int no=0;
     int need=1;
     int has=2;
     int cover=3;
-    int cnt=0;
-    int helper(TreeNode* root) {
+    int ans=0;
+    int helper(TreeNode* root){
         if(!root){
-            return no;
+            return 0;
         }
-        if(root->left==NULL && root->right==NULL){
+        if(!root->left && !root->right){
             return need;
         }
-        int lft=helper(root->left);
-        int rgt=helper(root->right);
-        if(lft==need || rgt==need){
-            cnt++;
+        int l=helper(root->left);
+        int r=helper(root->right);
+        if(l==need || r==need){
+            ans++;
             return has;
         }
-        if(lft==has || rgt==has){
+        if(l==has || r==has){
             return cover;
         }
-        return need; 
+        return need;
     }
     int minCameraCover(TreeNode* root) {
-         return helper(root)==need?cnt+1:cnt;
+        if(helper(root)==need){
+            ans++;
+        }
+        return ans;
     }
 };
