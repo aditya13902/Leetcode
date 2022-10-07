@@ -1,17 +1,16 @@
 class Solution {
 public:
-    vector<vector<int>>dp;
-    int helper(string &s,int l,int r){
-        if(l>r) return 0;
-        if(l==r) return 1;
-        if(dp[l][r]!=-1) return dp[l][r];
-        if(s[l]==s[r]){
-            return 2+helper(s,l+1,r-1);
-        }
-        return dp[l][r]=max(helper(s,l+1,r),helper(s,l,r-1));
-    }
     int longestPalindromeSubseq(string s) {
-        dp.resize(s.size(),vector<int>(s.size(),-1));
-        return helper(s,0,s.size()-1);
+        vector<vector<int>>dp(s.size(),vector<int>(s.size(),0));
+        for(int i=s.size()-1;i>=0;i--){
+            dp[i][i]=1;
+            for(int j=i+1;j<s.size();j++){
+                if(s[i]==s[j]){
+                    dp[i][j]=max(dp[i][j],2+((i+1==j)?0:dp[i+1][j-1]));
+                }
+                dp[i][j]=max({dp[i][j],dp[i+1][j],dp[i][j-1]});
+            }
+        }
+        return dp[0][s.size()-1];
     }
 };
