@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int lcs(string text1, string text2) {
+    int lcs(string &text1, string &text2) {
         vector<int>prev(text2.size()+1,0);
         for(int i=1;i<=text1.size();i++){
             vector<int>curr(text2.size()+1,0);
