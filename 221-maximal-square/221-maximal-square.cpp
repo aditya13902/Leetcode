@@ -3,29 +3,30 @@ public:
     int maximalSquare(vector<vector<char>>& matrix) {
         int n=matrix.size();
         int m=matrix[0].size();
-        vector<vector<int>>dp(n,vector<int>(m,0));
+        vector<int>prev(m,0);
         int ans=0;
-        for(int i=0;i<matrix.size();i++){
-            for(int j=0;j<matrix[0].size();j++){
-                if(matrix[i][j]=='1'){
-                    dp[i][j]=1;
-                    ans=1;
-                }
+        for(int c=0;c<m;c++){
+            if(matrix[0][c]=='1'){
+                prev[c]=1;
+                ans=1;
             }
         }
         
         for(int i=1;i<n;i++){
+            vector<int>curr(m,0);
+            if(matrix[i][0]=='1'){
+                curr[0]=1;
+                ans=max(ans,curr[0]);
+            }
             for(int j=1;j<m;j++){
-                int curr=min({dp[i-1][j],dp[i][j-1],dp[i-1][j-1]});
+                int res=min({prev[j],curr[j-1],prev[j-1]});
                 // int curr=0;
                 if(matrix[i][j]=='1'){
-                    dp[i][j]=1+curr;
+                    curr[j]=1+res;
                 }
-                else{
-                    dp[i][j]=0;
-                }
-                ans=max(ans,dp[i][j]);
+                ans=max(ans,curr[j]);
             }
+            prev=curr;
             
         }
         return ans*ans;
