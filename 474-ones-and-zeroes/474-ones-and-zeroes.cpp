@@ -1,24 +1,26 @@
 class Solution {
-private:
-    void count(string& s,int &cnt0,int &cnt1){
-        for(auto ch:s){
-            if(ch=='0') cnt0++;
-            else cnt1++;
-        }
-    }
 public:
-    int findMaxForm(vector<string>& strs, int m, int n) {
-        vector<vector<int>>dp(m+1,vector<int>(n+1));
-        for(auto str:strs){
-            int cnt0=0;
-            int cnt1=0;
-            count(str,cnt0,cnt1);
-            for(int i=m;i>=cnt0;i--){
-                for(int j=n;j>=cnt1;j--){
-                    dp[i][j]=max(dp[i][j],1+dp[i-cnt0][j-cnt1]);
-                }
-            }
+    vector<vector<vector<int>>>dp;
+    int helper(vector<string>&strs,int m,int n,int i){
+        if(m==0 && n==0){
+            return 0;
         }
-        return dp[m][n];
+        if(i==strs.size()) return 0;
+        if(dp[m][n][i]!=-1) return dp[m][n][i];
+        int cnt0=0;
+        int cnt1=0;
+        for(auto ch:strs[i]){
+            cnt0=(ch=='0')?cnt0+1:cnt0;
+            cnt1=(ch=='1')?cnt1+1:cnt1;
+        }
+        int ans=helper(strs,m,n,i+1);
+        if(cnt0<=m && cnt1<=n){
+            ans=max(ans,1+helper(strs,m-cnt0,n-cnt1,i+1));
+        }
+        return dp[m][n][i]=ans;
+    }
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        dp.resize(m+1,vector<vector<int>>(n+1,vector<int>(strs.size(),-1)));
+        return helper(strs,m,n,0);
     }
 };
