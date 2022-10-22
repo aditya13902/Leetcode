@@ -1,46 +1,42 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
 	public:
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
-    vector<int>dis;
-    vector<int>vis;
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
-        dis.resize(V,1e9);
-        vis.resize(V,0);
-        // vis[S]=1;
-        set<pair<int,int>>st;
-        st.insert({0,S});
+        vector<int>dis(V,1e8);
+        vector<int>vis(V,0);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        pq.push({0,S});
         dis[S]=0;
-        while(st.size()){
-            auto curr=*st.begin();
-            st.erase(st.begin());
-            int curr_dist=curr.first;
-            int curr_v=curr.second;
-            if(vis[curr_v]){
-                continue;
-            }
-            vis[curr_v]=1;
-            for(auto ele:adj[curr_v]){
-                if(dis[ele[0]]>curr_dist+ele[1]){
-                    dis[ele[0]]=curr_dist+ele[1];
-                    st.insert({dis[ele[0]],ele[0]});
+        while(pq.size()){
+            auto top=pq.top();
+            pq.pop();
+            int v=top.second;
+            int d=top.first;
+            vis[v]=1;
+            for(auto ele:adj[v]){
+                if(vis[ele[0]]) continue;
+                if(d+ele[1]<dis[ele[0]]){
+                    dis[ele[0]]=d+ele[1];
+                    pq.push({dis[ele[0]],ele[0]});
                 }
             }
         }
         return dis;
+        
     }
 };
 
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 
 int main()
@@ -77,4 +73,5 @@ int main()
     return 0;
 }
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
