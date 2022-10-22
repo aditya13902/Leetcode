@@ -1,42 +1,44 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial template for C++
 
 #include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function template for C++
 
 class Solution {
   public:
-	void shortest_distance(vector<vector<int>>&matrix){
+	void shortest_distance(vector<vector<int>>&dp){
 	    // Code here
-	    for(int i=0;i<matrix.size();i++){
-	        for(int j=0;j<matrix[0].size();j++){
-	            if(matrix[i][j]==-1 ){
-	                matrix[i][j]=1e8;
+	    for(int i=0;i<dp.size();i++){
+	        for(int j=0;j<dp[0].size();j++){
+	            if(dp[i][j]==-1){
+	                dp[i][j]=INT_MAX;
 	            }
 	        }
 	    }
-	    for(int k=0;k<matrix.size();k++){
-	        for(int i=0;i<matrix.size();i++){
-	            for(int j=0;j<matrix.size();j++){
-	                matrix[i][j]=min(matrix[i][j],matrix[i][k]+matrix[k][j]);
+	    int n=dp.size();
+	    for(int k=0;k<n;k++){
+	        for(int i=0;i<n;i++){
+	            for(int j=0;j<n;j++){
+	                if(dp[i][k]!=INT_MAX && dp[k][j]!=INT_MAX && dp[i][j]>dp[i][k]+dp[k][j]){
+	                    dp[i][j]=dp[i][k]+dp[k][j];
+	                }
 	            }
 	        }
 	    }
-	    for(int i=0;i<matrix.size();i++){
-	        for(int j=0;j<matrix[0].size();j++){
-	            if(matrix[i][j]==1e8){
-	                matrix[i][j]=-1;
+	    for(int i=0;i<n;i++){
+	        for(int j=0;j<n;j++){
+	            if(dp[i][j]==INT_MAX){
+	                dp[i][j]=-1;
 	            }
 	        }
 	    }
 	}
 };
 
-
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main(){
 	int tc;
 	cin >> tc;
@@ -59,4 +61,5 @@ int main(){
 		}
 	}
 	return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
