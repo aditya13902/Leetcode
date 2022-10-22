@@ -1,9 +1,7 @@
 # Floyd Warshall
-## Medium 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">The problem is to find the shortest distances between every pair of vertices in a given edge-weighted directed Graph. The Graph is represented as an adjacency matrix, and the matrix denotes the weight of the edges (if it exists) else -1.<br>
-<strong>Do it in-place.</strong></span><br>
-&nbsp;</p>
+## Medium
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">The problem is to find the shortest distances between every pair of vertices in a given <strong>edge-weighted directed</strong>&nbsp;graph. The graph is represented as an adjacency matrix of size&nbsp;<strong>n*n</strong>. <strong>Matrix[i][j]</strong> denotes&nbsp;the weight of the edge from <strong>i to j.&nbsp;</strong>If&nbsp;<strong>Matrix[i][j]=-1,&nbsp;</strong>it means there is no&nbsp;edge from <strong>i to j.</strong><br>
+<strong>Do it in-place.</strong></span></p>
 
 <p><span style="font-size:18px"><strong>Example 1:</strong></span></p>
 
@@ -22,17 +20,13 @@ and the cost will be 1+6=7 which is less than
 43.</span>
 </pre>
 
-<p>&nbsp;</p>
-
 <p><span style="font-size:18px"><strong>Your Task:</strong><br>
-You don't need to read, return or print anything. Your task is to complete the function&nbsp;<strong>shortest_distance()&nbsp;</strong>which takes the matrix as input parameter and modify the distances for every pair in-place.</span><br>
-&nbsp;</p>
+You don't need to read, return or print anything. Your task is to complete the function&nbsp;<strong>shortest_distance()&nbsp;</strong>which takes the <strong>matrix</strong> as input parameter and <strong>modifies</strong> the distances <strong>for every pair in-place.</strong></span></p>
 
 <p><span style="font-size:18px"><strong>Expected Time Complexity:&nbsp;</strong>O(n<sup>3</sup>)<br>
-<strong>Expected Space Complexity:&nbsp;</strong>O(1)</span><br>
-&nbsp;</p>
+<strong>Expected Space Complexity:&nbsp;</strong>O(1)</span></p>
 
 <p><span style="font-size:18px"><strong>Constraints:</strong><br>
-1 &lt;= n &lt;= 100</span></p>
- <p></p>
-            </div>
+1 &lt;= n &lt;= 100<br>
+-1 &lt;= matrix[ i ][ j ] &lt;= 1000</span></p>
+</div>
