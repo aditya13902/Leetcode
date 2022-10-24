@@ -46,11 +46,10 @@ class Solution {
         for(auto vec: operators){
             int x=vec[0];
             int y=vec[1];
-            if(!dsu.set(x*m+y)){
-                ans.push_back(cnt);
-                continue;
+            if(dsu.set(x*m+y)){
+                cnt++;
             }
-            cnt++;
+            
             for(int i=0;i<4;i++){
                 int newx=x+dx[i];
                 int newy=y+dy[i];
