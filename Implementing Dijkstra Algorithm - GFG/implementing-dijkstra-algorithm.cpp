@@ -13,15 +13,15 @@ class Solution
         // Code here
         vector<int>dis(V,INT_MAX);
         dis[S]=0;
-        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>pq;
-        pq.push({0,S});
-        while(pq.size()){
-            auto curr=pq.top();
-            pq.pop();
+        set<vector<int>>st;
+        st.insert({0,S});
+        while(st.size()){
+            auto curr=*(st.begin());
+            st.erase(st.begin());
             for(auto vec:adj[curr[1]]){
                 if(dis[vec[0]]>dis[curr[1]]+vec[1]){
                     dis[vec[0]]=dis[curr[1]]+vec[1];
-                    pq.push({dis[vec[0]],vec[0]});
+                    st.insert({dis[vec[0]],vec[0]});
                 }
             }
         }
