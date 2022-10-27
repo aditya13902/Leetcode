@@ -6,8 +6,8 @@ public:
         for(auto ele:rolls){
             st.insert(ele);
             if(st.size()==k){
-                cnt++;
                 st.clear();
+                cnt++;
             }
         }
         return cnt+1;
