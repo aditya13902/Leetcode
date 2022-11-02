@@ -1,43 +1,30 @@
 class Solution {
 public:
-    bool safe(vector<vector<int>>& grid,int& r,int &c){
-        if(grid[r][c]==1){
-            if(c==grid[0].size()-1 || grid[r][c+1]==-1){
-                return false;
+    int row;
+    int col;
+    int helper(vector<vector<int>>&grid,int i,int j){
+        if(i==row) return j;
+        if(grid[i][j]==1){
+            if(j+1<col && grid[i][j+1]==1){
+                return helper(grid,i+1,j+1);
+            }
+            else{
+                return -1;
             }
         }
         else{
-            if(c==0 || grid[r][c-1]==1){
-                return false;
+            if(j-1>=0 && grid[i][j-1]==-1){
+                return helper(grid,i+1,j-1);
             }
+            else return -1;
         }
-        return true;
     }
     vector<int> findBall(vector<vector<int>>& grid) {
-        vector<int>ans(grid[0].size(),-1);
-        for(int i=0;i<grid[0].size();i++){
-            int r=0;
-            int c=i;
-            int f=1;
-            while(r!=grid.size()){
-                if(!safe(grid,r,c)){
-                    f=0;
-                    break;
-                }
-                if(grid[r][c]==1){
-                    r++;
-                    c++;
-                }
-                else{
-                    r++;
-                    c--;
-                }
-            }
-            if(f){
-                ans[i]=c;
-            }else{
-                continue;
-            }
+        row=grid.size();
+        col=grid[0].size();
+        vector<int>ans(grid[0].size());
+        for(int c=0;c<col;c++){
+            ans[c]=helper(grid,0,c);
         }
         return ans;
     }
