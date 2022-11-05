@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial template for C++
 
 #include <bits/stdc++.h>
@@ -81,7 +81,7 @@ Node *buildTree(string str)
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function template for C++
 
 /*
@@ -99,19 +99,16 @@ struct Node
 */
 class Solution{
   public:
-    int cnt=0;
-    void dfs(Node* root,int k,vector<int>&vec){
-        if(!root){
-            return;
-        }
+    vector<int>vec;
+    void dfs(Node* root,int k,int& cnt){
+        if(!root) return;
         vec.push_back(root->data);
-        dfs(root->left,k,vec);
-        dfs(root->right,k,vec);
-        int siz=vec.size();
-        int sum=0;
-        for(int i=siz-1;i>=0;i--){
-            sum+=vec[i];
-            if(sum==k){
+        dfs(root->left,k,cnt);
+        dfs(root->right,k,cnt);
+        int ans=0;
+        for(int i=vec.size()-1;i>=0;i--){
+            ans+=vec[i];
+            if(ans==k){
                 cnt++;
             }
         }
@@ -120,13 +117,13 @@ class Solution{
     int sumK(Node *root,int k)
     {
         // code here 
-        vector<int>vec;
-        dfs(root,k,vec);
+        int cnt=0;
+        dfs(root,k,cnt);
         return cnt;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main() {
     string tc;
@@ -146,4 +143,5 @@ int main() {
         cout << ob.sumK(root, k) << "\n";
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
