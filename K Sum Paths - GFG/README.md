@@ -1,7 +1,6 @@
 # K Sum Paths
-## Medium 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">Given a binary tree and an integer K. Find the number of paths in the tree which have their sum equal to K.<br>
+## Medium
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given a binary tree and an integer K. Find the number of paths in the tree which have their sum equal to K.<br>
 A path may start from any node and end at any node in the downward direction.</span></p>
 
 <p><br>
@@ -56,5 +55,4 @@ You don't need to read input or print anything. Complete the function <strong>su
 1 ≤ N ≤ 10<sup>5</sup><br>
 -10<sup>5</sup> ≤ Node Value ≤ 10<sup>5</sup><br>
 -10<sup>9</sup> ≤ k ≤ 10<sup>9</sup></span></p>
- <p></p>
-            </div>
+</div>
