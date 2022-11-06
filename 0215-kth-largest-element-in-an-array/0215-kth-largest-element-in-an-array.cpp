@@ -1,7 +1,7 @@
 class Solution {
 public:
     int helper(vector<int>&nums,int s,int e,int k){
-        if(s>e) return -1;
+        // if(s>e) return -1;
         int idx=s;
         int piv=nums[e];
         for(int i=s;i<e;i++){
