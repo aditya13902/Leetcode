@@ -11,17 +11,21 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
-        vector<int>dis(V,INT_MAX);
+        vector<int>dis(V,1e8);
         dis[S]=0;
-        set<vector<int>>st;
+        set<pair<int,int>>st;
         st.insert({0,S});
         while(st.size()){
             auto curr=*(st.begin());
             st.erase(st.begin());
-            for(auto vec:adj[curr[1]]){
-                if(dis[vec[0]]>dis[curr[1]]+vec[1]){
-                    dis[vec[0]]=dis[curr[1]]+vec[1];
-                    st.insert({dis[vec[0]],vec[0]});
+            int v=curr.second;
+            int d=curr.first;
+            for(auto ele:adj[v]){
+                int curr_v=ele[0];
+                int curr_d=ele[1];
+                if(dis[curr_v]>d+curr_d){
+                    dis[curr_v]=d+curr_d;
+                    st.insert({d+curr_d,curr_v});
                 }
             }
         }
