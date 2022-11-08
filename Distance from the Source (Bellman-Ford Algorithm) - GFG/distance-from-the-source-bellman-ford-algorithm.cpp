@@ -16,7 +16,7 @@ class Solution {
         // Code here
         vector<int>dis(V,1e8);
         dis[S]=0;
-        for(int i=0;i<V-1;i++){
+        for(int i=1;i<=V-1;i++){
             for(auto vec:edges){
                 if(dis[vec[1]]>dis[vec[0]]+vec[2]){
                     dis[vec[1]]=dis[vec[0]]+vec[2];
