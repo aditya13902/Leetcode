@@ -1,33 +1,20 @@
 class Solution {
 public:
     bool closeStrings(string word1, string word2) {
-        multiset<int>st;
-        unordered_map<char,int>mp1;
-        unordered_map<char,int>mp2;
+        unordered_set<char>st1;
+        unordered_set<char>st2;
+        vector<int>cnt1(26);
+        vector<int>cnt2(26);
         for(auto ch:word1){
-            mp1[ch]++;
+            st1.insert(ch);
+            cnt1[ch-'a']++;
         }
-        for(auto it:mp1){
-            st.insert(it.second);
-        }
-        
         for(auto ch:word2){
-            mp2[ch]++;
+            st2.insert(ch);
+            cnt2[ch-'a']++;
         }
-        for(auto it:mp2){
-            if(mp1[it.first]!=0){
-                if(st.find(it.second)!=st.end()){
-                    st.erase(st.find(it.second));
-                }
-                else{
-                    return false;
-                }
-            }
-            else{
-                return false;
-            }
-        }
-        return true;
-        
+        sort(cnt1.begin(),cnt1.end());
+        sort(cnt2.begin(),cnt2.end());
+        return st1==st2 && cnt1==cnt2;
     }
 };
